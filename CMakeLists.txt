@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(include)
 
-add_executable(GetReadyForYourDate main.cpp)
+add_executable(GetReadyForYourDate main.cpp
+        include/Player.h
+        src/Player.cpp)
