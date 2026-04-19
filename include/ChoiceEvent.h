@@ -9,7 +9,7 @@
 #include <string>
 #include "Event.h"
 #include <vector>
-#include "choice.h"
+#include "Choice.h"
 
 
 class ChoiceEvent: public virtual Event {
