@@ -24,7 +24,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Event& obj);
     friend std::istream& operator>>(std::istream& is, Event& obj);
 
-    virtual void trigger()=0;
+    // virtual void trigger()=0;
 };
 
 #endif //GETREADYFORYOURDATE_EVENT_H
