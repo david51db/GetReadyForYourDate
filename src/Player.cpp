@@ -42,8 +42,7 @@ Player &Player::operator=(const Player &obj) {
     return *this;
 }
 
-Player::~Player() {
-}
+Player::~Player() = default;
 
 ostream& operator<<(ostream& os, const Player& obj) {
     os<<"Name: " << obj.name<< "\n";

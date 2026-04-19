@@ -9,4 +9,6 @@ add_executable(GetReadyForYourDate main.cpp
         include/Player.h
         src/Player.cpp
         include/Partner.h
-        src/Partner.cpp)
+        src/Partner.cpp
+        include/Event.h
+        src/Event.cpp)

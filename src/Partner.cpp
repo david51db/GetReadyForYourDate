@@ -35,6 +35,8 @@ Partner& Partner::operator=(const Partner &obj) {
     return *this;
 }
 
+Partner::~Partner() = default;
+
 ostream& operator<<(ostream &os, const Partner &obj) {
     os<<"Name: " << obj.name<< "\n";
 
