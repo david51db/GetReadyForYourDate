@@ -7,4 +7,6 @@ include_directories(include)
 
 add_executable(GetReadyForYourDate main.cpp
         include/Player.h
-        src/Player.cpp)
+        src/Player.cpp
+        include/Partner.h
+        src/Partner.cpp)
