@@ -10,7 +10,7 @@
 #include "RandomEvent.h"
 
 
-class ChainEvent: public RandomEvent, public ChoiceEvent {
+class ChainEvent: public virtual RandomEvent, public virtual ChoiceEvent {
 public:
     ChainEvent();
     ChainEvent(const ChainEvent& obj);
