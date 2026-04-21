@@ -10,10 +10,11 @@
 
 class MiniGame {
     int reward;
+    std::string text;
 
 public:
     MiniGame();
-    MiniGame(int reward);
+    MiniGame(int reward, std::string text);
     MiniGame(const MiniGame& obj);
     MiniGame& operator=(const MiniGame& obj);
     virtual ~MiniGame();

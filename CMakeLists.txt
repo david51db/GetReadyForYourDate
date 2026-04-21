@@ -21,4 +21,6 @@ add_executable(GetReadyForYourDate main.cpp
         include/ChainEvent.h
         src/ChainEvent.cpp
         include/MiniGame.h
-        src/MiniGame.cpp)
+        src/MiniGame.cpp
+        include/Ad.h
+        src/Ad.cpp)

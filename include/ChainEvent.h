@@ -13,6 +13,7 @@
 class ChainEvent: public virtual RandomEvent, public virtual ChoiceEvent {
 public:
     ChainEvent();
+    // ChainnEvent(options, whatever????) !!!!!!!!!!!!!!!!!!!!!!!! atribute de la antetele vechi?
     ChainEvent(const ChainEvent& obj);
     ChainEvent& operator=(const ChainEvent& obj);
     ~ChainEvent() override;
