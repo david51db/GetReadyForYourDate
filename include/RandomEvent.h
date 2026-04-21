@@ -22,7 +22,7 @@ public:
     RandomEvent(int chance, std::string avoidStat, int avoidThreshold, std::string textAvoided, std::string textResult, std::string text, bool phase);
     RandomEvent(const RandomEvent& obj);
     RandomEvent& operator=(const RandomEvent& obj);
-    ~RandomEvent();
+    ~RandomEvent() override;
 
     friend std::ostream& operator<<(std::ostream& os, const RandomEvent& obj);
     friend std::istream& operator>>(std::istream& is, RandomEvent& obj);

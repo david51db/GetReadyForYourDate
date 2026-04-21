@@ -17,4 +17,6 @@ add_executable(GetReadyForYourDate main.cpp
         include/Choice.h
         src/Choice.cpp
         include/RandomEvent.h
-        src/RandomEvent.cpp)
+        src/RandomEvent.cpp
+        include/ChainEvent.h
+        src/ChainEvent.cpp)

@@ -20,7 +20,7 @@ public:
     ChoiceEvent(std::vector<Choice>& choices, std::string text, bool phase);
     ChoiceEvent(const ChoiceEvent& obj);
     ChoiceEvent& operator=(const ChoiceEvent& obj);
-    ~ChoiceEvent();
+    ~ChoiceEvent() override;
 
     friend std::ostream& operator<<(std::ostream& os, const ChoiceEvent& obj);
     friend std::istream& operator>>(std::istream& is, ChoiceEvent& obj);
