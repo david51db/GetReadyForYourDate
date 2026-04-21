@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Choice.h"
+#include "ChoiceEvent.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -14,22 +15,25 @@ Choice::Choice() {
     deltaDignity=0;
     deltaVibe=0;
     deltaMoney=0;
+    followUp=nullptr;
 }
 
-Choice::Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney) {
+Choice::Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp) {
     this->text=text;
     this->deltaCharm=deltaCharm;
-    this->deltaDignity=deltaCharm;
+    this->deltaDignity=deltaDignity;
     this->deltaMoney=deltaMoney;
     this->deltaVibe=deltaVibe;
+    this->followUp=followUp;
 }
 
 Choice::Choice(const Choice &obj) {
     this->text=obj.text;
     this->deltaCharm=obj.deltaCharm;
-    this->deltaDignity=obj.deltaCharm;
+    this->deltaDignity=obj.deltaDignity;
     this->deltaMoney=obj.deltaMoney;
     this->deltaVibe=obj.deltaVibe;
+    this->followUp=obj.followUp;
 }
 
 Choice &Choice::operator=(const Choice &obj) {
@@ -40,6 +44,7 @@ Choice &Choice::operator=(const Choice &obj) {
     this->deltaDignity=obj.deltaDignity;
     this->deltaMoney=obj.deltaMoney;
     this->deltaVibe=obj.deltaVibe;
+    this->followUp=obj.followUp;
 
     return *this;
 }
@@ -52,6 +57,7 @@ ostream& operator<<(ostream& os, const Choice& obj) {
     os<<"Delta Dignity: "<<obj.deltaDignity<<"\n";
     os<<"Delta Vibe: "<<obj.deltaVibe<<"\n";
     os<<"Delta Money: "<<obj.deltaMoney<<"\n";
+    if (obj.followUp!=nullptr) os<<"Follow Up Question\n"<<*obj.followUp<<"\n";
 
     return os;
 }
@@ -71,6 +77,7 @@ istream& operator>>(istream& is, Choice& obj) {
 
     cout<<"Delta Money: ";
     is>>obj.deltaMoney;
+
 
     return is;
 

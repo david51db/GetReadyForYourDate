@@ -9,16 +9,19 @@
 #include <string>
 #include <vector>
 
+class ChoiceEvent;
+
 class Choice {
     std::string text;
     int deltaCharm;
     int deltaDignity;
     int deltaVibe;
     int deltaMoney;
+    ChoiceEvent* followUp;
 
 public:
     Choice();
-    Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney);
+    Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp);
     Choice(const Choice& obj);
     Choice& operator=(const Choice& obj);
     ~Choice();
