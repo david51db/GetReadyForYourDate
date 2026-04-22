@@ -23,4 +23,6 @@ add_executable(GetReadyForYourDate main.cpp
         include/MiniGame.h
         src/MiniGame.cpp
         include/Ad.h
-        src/Ad.cpp)
+        src/Ad.cpp
+        include/RPS.h
+        src/RPS.cpp)
