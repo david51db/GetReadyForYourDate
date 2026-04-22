@@ -25,4 +25,6 @@ add_executable(GetReadyForYourDate main.cpp
         include/Ad.h
         src/Ad.cpp
         include/RPS.h
-        src/RPS.cpp)
+        src/RPS.cpp
+        include/Game.h
+        src/Game.cpp)
