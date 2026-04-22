@@ -16,7 +16,7 @@ Ad::Ad(int duration, int reward, string text): MiniGame(reward, text) {
 }
 
 Ad::Ad(const Ad &obj):MiniGame(obj) {
-    this->duration=duration;
+    this->duration=obj.duration;
 }
 
 Ad& Ad::operator=(const Ad& obj) {
@@ -24,7 +24,7 @@ Ad& Ad::operator=(const Ad& obj) {
 
     MiniGame::operator=(obj);
 
-    this->duration=duration;
+    this->duration=obj.duration;
     return *this;
 }
 

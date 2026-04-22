@@ -13,6 +13,7 @@
 
 
 class ChoiceEvent: public virtual Event {
+protected:
     std::vector<Choice> choices;
 
 public:

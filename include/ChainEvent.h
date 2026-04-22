@@ -13,7 +13,9 @@
 class ChainEvent: public virtual RandomEvent, public virtual ChoiceEvent {
 public:
     ChainEvent();
-    // ChainnEvent(options, whatever????) !!!!!!!!!!!!!!!!!!!!!!!! atribute de la antetele vechi?
+    ChainEvent(std::vector<Choice>& choices, std::string text, bool phase,
+    int chance, std::string avoidStat, int avoidThreshold,
+    std::string textAvoided, std::string textResult) ;
     ChainEvent(const ChainEvent& obj);
     ChainEvent& operator=(const ChainEvent& obj);
     ~ChainEvent() override;

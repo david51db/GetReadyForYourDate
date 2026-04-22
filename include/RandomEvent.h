@@ -11,6 +11,7 @@
 #include <vector>
 
 class RandomEvent : public virtual Event{
+protected:
     int chance;
     std::string avoidStat;
     int avoidThreshold;

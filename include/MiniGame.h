@@ -19,8 +19,13 @@ public:
     MiniGame& operator=(const MiniGame& obj);
     virtual ~MiniGame();
 
+
+
+
     friend std::ostream& operator<<(std::ostream& os, const MiniGame& obj);
     friend std::istream& operator>>(std::istream& is, MiniGame& obj);
+
+    // virtual void play()=0;
 };
 
 

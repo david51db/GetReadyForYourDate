@@ -22,6 +22,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Ad& obj);
     friend std::istream& operator>>(std::istream& is, Ad& obj);
+
+    // virtual void play()=0;
 };
 
 

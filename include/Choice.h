@@ -13,6 +13,7 @@ class ChoiceEvent;
 
 class Choice {
     std::string text;
+    int price;
     int deltaCharm;
     int deltaDignity;
     int deltaVibe;
@@ -21,7 +22,7 @@ class Choice {
 
 public:
     Choice();
-    Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp);
+    Choice(int price,std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp);
     Choice(const Choice& obj);
     Choice& operator=(const Choice& obj);
     ~Choice();

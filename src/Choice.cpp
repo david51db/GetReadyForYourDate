@@ -10,6 +10,7 @@
 using namespace std;
 
 Choice::Choice() {
+    price=0;
     text="N/A";
     deltaCharm=0;
     deltaDignity=0;
@@ -18,7 +19,8 @@ Choice::Choice() {
     followUp=nullptr;
 }
 
-Choice::Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp) {
+Choice::Choice(int price, std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp) {
+    this->price=price;
     this->text=text;
     this->deltaCharm=deltaCharm;
     this->deltaDignity=deltaDignity;
@@ -28,6 +30,7 @@ Choice::Choice(std::string text, int deltaCharm, int deltaDignity, int deltaVibe
 }
 
 Choice::Choice(const Choice &obj) {
+    this->price=obj.price;
     this->text=obj.text;
     this->deltaCharm=obj.deltaCharm;
     this->deltaDignity=obj.deltaDignity;
@@ -39,6 +42,7 @@ Choice::Choice(const Choice &obj) {
 Choice &Choice::operator=(const Choice &obj) {
     if (this==&obj) return *this;
 
+    this->price=obj.price;
     this->text=obj.text;
     this->deltaCharm=obj.deltaCharm;
     this->deltaDignity=obj.deltaDignity;
@@ -53,6 +57,7 @@ Choice::~Choice() =default;
 
 ostream& operator<<(ostream& os, const Choice& obj) {
     os<<"Text: "<<obj.text<<"\n";
+    os<<"Price: "<<obj.price<<"\n";
     os<<"Delta Charm: "<<obj.deltaCharm<<"\n";
     os<<"Delta Dignity: "<<obj.deltaDignity<<"\n";
     os<<"Delta Vibe: "<<obj.deltaVibe<<"\n";
@@ -65,6 +70,9 @@ ostream& operator<<(ostream& os, const Choice& obj) {
 istream& operator>>(istream& is, Choice& obj) {
     cout<<"Text: ";
     is>>obj.text;
+
+    cout<<"Price: ";
+    is>>obj.price;
 
     cout<<"Delta Charm: ";
     is>>obj.deltaCharm;
