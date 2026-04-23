@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 using namespace std;
+#include <fstream>
+#include <sstream>
 
 RandomEvent::RandomEvent() : Event(){
     chance=0;
@@ -87,6 +89,43 @@ istream& operator>>(istream& is, RandomEvent& obj) {
     is>>obj.textResult;
 
     return is;
+
+}
+
+void RandomEvent::loadFromFile(ifstream &fin) {
+    string line;
+    string token;
+
+    getline(fin , line);
+
+    while (line.empty()&&!fin.eof())getline(fin, line);
+
+    stringstream ss(line);
+    getline(ss, token, '|');
+
+    this->text=token;
+    getline(ss, token, '|');
+
+    this->phase=stoi(token);
+    getline(ss, token, '|');
+
+    this->chance=stoi(token);
+    getline(ss, token, '|');
+
+    this->avoidStat=token;
+    getline(ss, token);
+
+    this->avoidThreshold=stoi(token);
+    getline(ss, token);
+
+    getline(fin, line);
+    this->textResult=line;
+
+    getline(fin, line);
+    this->textAvoided=line;
+
+    getline(fin, line);
+
 
 }
 

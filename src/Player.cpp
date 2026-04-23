@@ -72,3 +72,18 @@ istream& operator>>(istream& is, Player& obj) {
 
     return is;
 }
+
+void Player::initialisePlayer() {
+
+    string playerName;
+    cin>>playerName;
+
+    this->setName(playerName);
+
+    this->charm=30;
+    this->dignity=30;
+    this->vibe=30;
+    this->money=50;
+
+
+}

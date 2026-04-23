@@ -23,7 +23,10 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ChainEvent& obj);
     friend std::istream& operator>>(std::istream& is, ChainEvent& obj);
 
+
     // void trigger() override;
+
+    void loadFromFile(std::ifstream &fin) override;
 };
 
 

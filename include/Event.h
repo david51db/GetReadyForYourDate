@@ -9,6 +9,7 @@
 #include <string>
 
 class Event{
+protected:
     std::string text;
     const int id;
     static int totalEvents;
@@ -23,6 +24,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Event& obj);
     friend std::istream& operator>>(std::istream& is, Event& obj);
+
+    virtual void loadFromFile(std::ifstream& fin)=0;
 
     // virtual void trigger()=0;
 };

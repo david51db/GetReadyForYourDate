@@ -7,7 +7,8 @@
 #include "ChoiceEvent.h"
 #include "RandomEvent.h"
 using namespace std;
-
+#include <fstream>
+#include <sstream>
 
 ChainEvent::ChainEvent(): ChoiceEvent(), RandomEvent() {
 }
@@ -93,3 +94,51 @@ istream& operator>>(istream &is, ChainEvent& obj) {
     return is;
 
 }
+
+
+void ChainEvent::loadFromFile(ifstream &fin) {
+    string line, token;
+
+    getline(fin, line);
+
+    while (line.empty() && !fin.eof())getline(fin, line);
+
+    stringstream ss1(line);
+
+    getline(ss1, token, '|');
+    this->text = token;
+
+    getline(ss1, token, '|');
+    this->phase = std::stoi(token);
+    getline(ss1, token, '|');
+    this->chance = std::stoi(token);
+
+    getline(ss1, token, '|');
+    this->avoidStat = token;
+
+    getline(ss1, token);
+    this->avoidThreshold = stoi(token);
+
+    getline(fin, line);
+
+    stringstream ss2(line);
+
+    getline(ss2, token, '|');
+    this->textResult = token;
+
+    getline(ss2, token);
+    this->textAvoided = token;
+
+    getline(fin, line);
+    int nrChoices=stoi(line);
+
+    choices.clear();
+    for (int i=0;i<nrChoices;i++) {
+        getline(fin, line);
+        Choice c;
+        c.parseFromString(line);
+        choices.push_back(c);
+    }
+    getline(fin, line);
+}
+

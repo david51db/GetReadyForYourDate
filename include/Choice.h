@@ -19,16 +19,30 @@ class Choice {
     int deltaVibe;
     int deltaMoney;
     ChoiceEvent* followUp;
+    int followUpId;
 
 public:
     Choice();
-    Choice(int price,std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp);
+    Choice(int price, std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney,
+           ChoiceEvent *followUp, int followUpId);
     Choice(const Choice& obj);
     Choice& operator=(const Choice& obj);
     ~Choice();
 
     friend std::ostream& operator<<(std::ostream& os, const Choice& obj);
     friend std::istream& operator>>(std::istream& is, Choice& obj);
+
+    int getFollowUpId() const { return followUpId; }
+    void setFollowUpPointer(ChoiceEvent* ptr) { this->followUp = ptr; }
+
+    void parseFromString(const std::string& line);
+
+
+
+
+
+
+
 };
 
 

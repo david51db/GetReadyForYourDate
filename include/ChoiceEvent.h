@@ -26,6 +26,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ChoiceEvent& obj);
     friend std::istream& operator>>(std::istream& is, ChoiceEvent& obj);
 
+    std::vector<Choice>& getChoices() { return choices; }
+
+    void loadFromFile(std::ifstream &fin) override;
     // void trigger() override;
 };
 

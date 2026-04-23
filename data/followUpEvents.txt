@@ -1,0 +1,15 @@
+You are under the table. The waiter drops a napkin and sees you. What now?|1
+2
+Bark like a dog to confuse him.|0|10|-20|5|0
+Apologize awkwardly and climb out.|0|-5|10|-10|0
+---
+The manager arrives and asks why you are yelling at the waiter.|1
+2
+Demand a free meal as compensation.|0|-10|-20|0|0
+Say the waiter insulted your outfit.|0|-5|-10|-5|0
+---
+He looks at the massive tip, smirks, and slips you his phone number.|1
+2
+Tear the paper up right in front of him.|0|10|20|10|0
+Quietly keep it in your pocket.|0|-5|-10|5|0
+---

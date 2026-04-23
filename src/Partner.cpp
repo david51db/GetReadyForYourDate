@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
+#include <sstream>
 Partner::Partner() {
     name="N/A";
     traits.push_back("N/A");
@@ -68,4 +68,8 @@ istream& operator>>(istream &is, Partner& obj) {
     is>>obj.secretTrait;
 
     return is;
+}
+
+void Partner::loadFromFile(ifstream &fin) {
+
 }

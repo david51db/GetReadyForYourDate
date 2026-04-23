@@ -1,0 +1,5 @@
+Your phone rings. What do you do?|1
+Answer it.|5|-10|-5|-20|0
+Tell your date he's more important.|20|+10|+5|+30|0
+Smash your phone.|0|-5|-20|-50|0
+---

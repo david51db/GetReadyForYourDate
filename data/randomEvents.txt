@@ -1,0 +1,4 @@
+You sense something...|1|3|dignity|50
+You got struck by lightning.
+You dodged a lightning.
+---

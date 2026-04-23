@@ -29,6 +29,8 @@ public:
     friend std::istream& operator>>(std::istream& is, RandomEvent& obj);
 
     // void trigger() override;
+
+    void loadFromFile(std::ifstream &fin) override;
 };
 
 

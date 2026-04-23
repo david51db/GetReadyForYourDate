@@ -24,6 +24,10 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Player& obj);
     friend std::istream& operator>>(std::istream& is, Player& obj);
+
+    void setName(std::string name){this->name=name;}
+
+    void initialisePlayer();
 };
 
 

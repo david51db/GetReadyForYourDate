@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 using namespace std;
+#include <sstream>
 
 Choice::Choice() {
     price=0;
@@ -17,9 +18,10 @@ Choice::Choice() {
     deltaVibe=0;
     deltaMoney=0;
     followUp=nullptr;
+    followUpId=0;
 }
 
-Choice::Choice(int price, std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp) {
+Choice::Choice(int price, std::string text, int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, ChoiceEvent* followUp, int followUpId) {
     this->price=price;
     this->text=text;
     this->deltaCharm=deltaCharm;
@@ -27,6 +29,7 @@ Choice::Choice(int price, std::string text, int deltaCharm, int deltaDignity, in
     this->deltaMoney=deltaMoney;
     this->deltaVibe=deltaVibe;
     this->followUp=followUp;
+    this->followUpId=followUpId;
 }
 
 Choice::Choice(const Choice &obj) {
@@ -37,6 +40,7 @@ Choice::Choice(const Choice &obj) {
     this->deltaMoney=obj.deltaMoney;
     this->deltaVibe=obj.deltaVibe;
     this->followUp=obj.followUp;
+    this->followUpId=obj.followUpId;
 }
 
 Choice &Choice::operator=(const Choice &obj) {
@@ -49,6 +53,7 @@ Choice &Choice::operator=(const Choice &obj) {
     this->deltaMoney=obj.deltaMoney;
     this->deltaVibe=obj.deltaVibe;
     this->followUp=obj.followUp;
+    this->followUpId=obj.followUpId;
 
     return *this;
 }
@@ -88,5 +93,39 @@ istream& operator>>(istream& is, Choice& obj) {
 
 
     return is;
+
+}
+
+
+void Choice::parseFromString(const string &line) {
+
+    stringstream ss(line);
+    string token;
+
+
+    getline(ss, token, '|');
+    this->text = token;
+
+    getline(ss, token, '|');
+    this->price=stoi(token);
+
+    getline(ss, token, '|');
+    this->deltaCharm=stoi(token);
+
+    getline(ss, token, '|');
+    this->deltaDignity=stoi(token);
+
+    getline(ss, token, '|');
+    this->deltaVibe=stoi(token);
+
+    if (getline(ss, token)) {
+        if (!token.empty()) this->followUpId = stoi(token);
+        else this->followUpId = 0;
+    } else {
+        this->followUpId = 0;
+    }
+    this->followUp=nullptr; //momentan
+
+
 
 }

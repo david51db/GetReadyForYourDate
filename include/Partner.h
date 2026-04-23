@@ -23,6 +23,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Partner& obj);
     friend std::istream& operator>>(std::istream& is, Partner& obj);
+
+    void loadFromFile(std::ifstream &fin);
 };
 
 

@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 using namespace std;
+#include <sstream>
+#include <fstream>
 
 
 ChoiceEvent:: ChoiceEvent(): Event() {
@@ -56,4 +58,32 @@ istream& operator>>(istream &is, ChoiceEvent &obj) {
     }
     cout<<"\n";
     return is;
+}
+
+void ChoiceEvent::loadFromFile(ifstream &fin) {
+    string line;
+    string token;
+
+    getline(fin, line);
+
+    while (line.empty()&&!fin.eof())getline(fin, line);
+
+    stringstream ss(line);
+    getline(ss, token, '|');
+    this->text=token;
+
+    getline(ss, token);
+    this->phase=stoi(token);
+
+    choices.clear();
+
+    while (getline(fin, line)) {
+        if (line=="---") break;
+
+        if (line.empty())continue;
+
+        Choice c;
+        c.parseFromString(line);
+        choices.push_back(c);
+    }
 }

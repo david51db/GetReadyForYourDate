@@ -1,0 +1,8 @@
+The waiter approaches the table. It's your ex!|1|20|vibe|60
+He glares at you and intentionally spills water on your lap.
+He smiles politely and pretends he doesn't know you.
+3
+Hide under the tablecloth.|0|-10|-20|-5|0
+Make a huge scene and yell at him.|0|-5|-30|-10|1
+Leave a massive tip to show off how well you're doing.|-50|20|10|15|2
+---
