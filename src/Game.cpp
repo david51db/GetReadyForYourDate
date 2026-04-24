@@ -15,7 +15,7 @@
 #include "Game.h"
 using namespace std;
 #include <fstream>
-
+#include "Trait.h"
 Game::Game() {
     this->player= new Player();
     this->partner= new Partner();
@@ -130,9 +130,18 @@ ostream& operator<<(ostream& os, const Game& obj) {
     os<<"Partner: \n"<<*obj.partner<<"\n";
     os<<"Events: \n";
 
+
+    for (auto pp: obj.partnerPool) {
+        os<<*pp<<"\n";
+    }
+
+    for (auto t: obj.traitPool) {
+        os<<*t<<"\n";
+    }
     for (auto e: obj.eventPool) {
         os<<*e<<"\n";
     }
+
 
     os<<"Random Pool: \n";
 
@@ -248,6 +257,36 @@ void Game::loadAllEvents() {
         }
     }
     finFollow.close();
+
+    ifstream finTraits("data/traits.txt");
+    if (!finTraits.is_open())cout<<"could not open fintraits";
+
+    if (finTraits.is_open()) {
+        while (finTraits.peek()!=EOF) {
+            finTraits>>ws;
+            if (finTraits.eof()) break;
+
+            Trait* t=new Trait();
+            t->loadFromFile(finTraits);
+            traitPool.push_back(t);
+        }
+    }
+
+    ifstream finPartners("data/partners.txt");
+    if (!finPartners.is_open())cout<<"could not open finpartners";
+
+    if (finPartners.is_open()) {
+        while (finPartners.peek()!=EOF) {
+            finPartners>>ws;
+            if (finPartners.eof()) break;
+
+            Partner* p=new Partner();
+            p->loadFromFile(finPartners);
+            p->loadTraits(traitPool);
+            partnerPool.push_back(p);
+        }
+    }
+
 }
 
 void Game::connectFollowUps() {
@@ -288,15 +327,15 @@ void Game::initialise() {
 void Game::run() {
 
 
-    cout<<"Welcome!\n\n";
-    cout<<"What is your name?";
+    cout<<"Welcome!\n";
+    cout<<"What is your name?\n";
 
     this->initialise();
 
     int choice;
     do {
 
-        cout<<"\n\n";
+        cout<<"\n";
         cout << "\n===== GET READY FOR YOUR DATE =====\n";
         cout << "1. Start new game\n";
         cout << "2. Load game\n";
@@ -306,9 +345,9 @@ void Game::run() {
         cin >> choice;
 
         switch (choice) {
-            case 1: this->startNewGame();
-            case 2: ;
-            case 3: cout<<*player;
+            case 1: this->startNewGame(); break;
+            case 2: break;
+            case 3: cout<<*player; break;
 
         }
     }while (choice!=0);
@@ -316,5 +355,120 @@ void Game::run() {
 
 void Game::startNewGame() {
 
+    player->initialisePlayer();
+    this->selectPartner();
+    this->drawEvents();
+    this->playEvents();
 
+}
+
+void Game::selectPartner() {
+    cout<<"Please choose your partner by typing its corresponding number.\n";
+
+    int indexPartner1 = rand() % partnerPool.size();
+    int indexPartner2=rand() % partnerPool.size();
+    int indexPartner3=rand() % partnerPool.size();
+
+    while (indexPartner1==indexPartner2)indexPartner2=rand() % partnerPool.size();
+    while (indexPartner3==indexPartner1 || indexPartner3==indexPartner2)indexPartner3=rand() % partnerPool.size();
+
+
+    cout<<"1. "<<partnerPool[indexPartner1]->getName()<<": ";
+    partnerPool[indexPartner1]->showTraits();
+    cout<<".\n";
+
+    cout<<"2. "<<partnerPool[indexPartner2]->getName()<<": ";
+    partnerPool[indexPartner2]->showTraits();
+    cout<<".\n";
+
+    cout<<"3. "<<partnerPool[indexPartner3]->getName()<<": ";
+    partnerPool[indexPartner3]->showTraits();
+    cout<<".\n";
+
+    int choice;
+    cin>>choice;
+
+    switch(choice){
+        case 1: *this->partner= *(partnerPool[indexPartner1]); break;
+        case 2: *this->partner=*(partnerPool[indexPartner2]); break;
+        case 3: *this->partner=*(partnerPool[indexPartner3]); break;
+    }
+}
+
+void Game::drawEvents() {
+    events.clear();
+
+    vector<bool> drawnChoiceEvents(eventPool.size(), false);
+    vector<bool> drawnRandomEvents(randomPool.size(),false);
+
+
+
+    for (int i=0;i<3;i++) {
+        int randomIdx;
+        do {
+            randomIdx=rand()%eventPool.size();
+        }while (drawnChoiceEvents[randomIdx] || eventPool[randomIdx]->getPhase()==true);
+
+        drawnChoiceEvents[randomIdx]=true;
+        events.push_back(eventPool[randomIdx]);//trb new?
+    }
+
+
+
+    for (int i=3;i<10;i++) {
+        int randomIdx;
+        do {
+            randomIdx=rand()%eventPool.size();
+        }while (drawnChoiceEvents[randomIdx] || eventPool[randomIdx]->getPhase()==false);
+
+        drawnChoiceEvents[randomIdx]=true;
+        events.push_back(eventPool[randomIdx]);
+    }
+
+
+
+    for (int i=0;i<3;i++) {
+        int randomIdx;
+        int attempts=0;
+        do {
+            randomIdx=rand()%randomPool.size();
+            attempts++;
+            if (attempts > 100) break;
+        }while (drawnRandomEvents[randomIdx] || randomPool[randomIdx]->getPhase()==true);
+        if (attempts > 100) continue;
+        if (randomPool[randomIdx]->getChance() > rand()%100) {
+            drawnRandomEvents[randomIdx]=true;
+            events.insert(events.begin()+rand()%4,randomPool[randomIdx]);
+        }
+    }
+
+
+
+    for (int i=3;i<10;i++) {
+        int randomIdx;
+        int attempts=0;
+        do {
+            randomIdx=rand()%randomPool.size();
+            attempts++;
+            if (attempts > 100) break;
+        }while (drawnRandomEvents[randomIdx] || randomPool[randomIdx]->getPhase()==false);
+        if (attempts > 100) continue;
+        if (randomPool[randomIdx]->getChance() > rand()%100) {
+            drawnRandomEvents[randomIdx]=true;
+            events.insert(events.begin()+rand()%7+4,randomPool[randomIdx]);
+        }
+    }
+
+
+}
+
+void Game::playEvents() {
+
+    for (Event* e: events) {
+        e->trigger(*this->player);
+        if (player->getCharm()<-500 || player->getVibe()<-500 || player->getDignity()<-500 || player->getMoney()<-500) {
+            cout<<"Game over.";
+            break;
+        }
+    }
 }

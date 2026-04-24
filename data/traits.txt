@@ -1,0 +1,8 @@
+funny|2|1|0
+sarcastic|1|2|0
+loud|1|3|0
+romantic|3|1|2
+curious|2|2|1
+pragmatic|1|0|3
+charismatic|3|2|1
+smart|2|1|2

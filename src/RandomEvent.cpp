@@ -12,10 +12,14 @@ using namespace std;
 
 RandomEvent::RandomEvent() : Event(){
     chance=0;
-    avoidStat="N/A";
+    avoidStat="";
     avoidThreshold=0;
     textAvoided="N/A";
     textResult="N/A";
+    deltaCharm=0;
+    deltaDignity=0;
+    deltaMoney=0;
+    deltaVibe=0;
 }
 
 RandomEvent::RandomEvent(int chance, string avoidStat, int avoidThreshold, string textAvoided, string textResult,
@@ -113,13 +117,26 @@ void RandomEvent::loadFromFile(ifstream &fin) {
     getline(ss, token, '|');
 
     this->avoidStat=token;
-    getline(ss, token);
+    getline(ss, token, '|');
 
     this->avoidThreshold=stoi(token);
-    getline(ss, token);
-
     getline(fin, line);
-    this->textResult=line;
+    stringstream ss2(line);
+
+    getline(ss2, token, '|');
+    this->textResult=token;
+
+    getline(ss2, token, '|');
+    this->deltaCharm=stoi(token);
+
+    getline(ss2, token, '|');
+    this->deltaDignity=stoi(token);
+
+    getline(ss2, token, '|');
+    this->deltaVibe=stoi(token);
+
+    getline(ss2, token);
+    this->deltaMoney=stoi(token);
 
     getline(fin, line);
     this->textAvoided=line;
@@ -129,3 +146,49 @@ void RandomEvent::loadFromFile(ifstream &fin) {
 
 }
 
+void RandomEvent::trigger(Player &player) {
+
+    cout<<text;
+
+    if (this->avoidStat=="") {
+        player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+        cout<<textResult<<"\n\n";
+    }
+    else {
+        if (avoidStat=="dignity") {
+            if (player.getDignity()>=avoidThreshold) {
+                cout<<textAvoided<<"\n\n";
+
+            }
+            else{ cout<<textResult<<"\n\n";
+                player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+            }
+        }
+        else if (avoidStat=="charm") {
+            if (player.getCharm()>=avoidThreshold){cout<<textAvoided<<"\n\n";}
+            else {
+                cout<<textResult<<"\n\n";
+                player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+            }
+        }
+        else if (avoidStat=="vibe") {
+            if (player.getVibe()>=avoidThreshold) {
+                cout<<textAvoided<<"\n\n";
+            }
+            else {
+                cout<<textResult<<"\n\n";
+                player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+            }
+        }
+    }
+}
+
+bool RandomEvent::checkAvoid(Player& player) {
+    if (avoidStat == "") return false;  // nu poate fi evitat
+
+    if (avoidStat == "dignity") return player.getDignity() >= avoidThreshold;
+    if (avoidStat == "charm") return player.getCharm() >= avoidThreshold;
+    if (avoidStat == "vibe") return player.getVibe() >= avoidThreshold;
+
+    return false;
+}

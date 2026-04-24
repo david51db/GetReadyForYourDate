@@ -1,0 +1,3 @@
+Alex|3|funny|sarcastic|loud|hates_phone
+Angela|2|romantic|curious|loves_wine
+Mark|3|pragmatic|charismatic|smart|splits_bill

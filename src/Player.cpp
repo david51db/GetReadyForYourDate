@@ -87,3 +87,18 @@ void Player::initialisePlayer() {
 
 
 }
+
+void Player::applyEffects(Choice& choice) {
+
+    this->charm=choice.getCharm()+this->charm;
+    this->vibe=choice.getVibe()+this->vibe;
+    this->dignity=choice.getDignity()+this->dignity;
+    this->money=choice.getMoney()+this->money;
+}
+
+void Player::applyEffects(int deltaVibe, int deltaCharm, int deltaDignity, int deltaMoney) {
+    this->charm=deltaCharm+this->charm;
+    this->vibe=deltaVibe+this->vibe;
+    this->dignity=deltaDignity+this->dignity;
+    this->money=deltaMoney+this->money;
+}

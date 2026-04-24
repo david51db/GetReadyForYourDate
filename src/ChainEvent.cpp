@@ -142,3 +142,16 @@ void ChainEvent::loadFromFile(ifstream &fin) {
     getline(fin, line);
 }
 
+void ChainEvent::trigger(Player& player) {
+    cout << text << "\n";
+    bool avoided = this->checkAvoid(player);
+    if (!avoided) {
+        cout << textResult << "\n\n";
+        player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+        ChoiceEvent::trigger(player);
+    }
+
+
+}
+
+

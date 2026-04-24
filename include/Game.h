@@ -15,7 +15,7 @@
 #include "ChainEvent.h"
 #include "ChoiceEvent.h"
 #include "RandomEvent.h"
-
+#include "Trait.h"
 
 
 class Game {
@@ -25,6 +25,7 @@ class Game {
     std::vector<ChoiceEvent*> eventPool;
     std::vector<RandomEvent*> randomPool;
     std::vector<Partner*> partnerPool;
+    std::vector<Trait*> traitPool;
     bool running;
     int eventIndex;
     std::vector<ChoiceEvent*> secretFollowUps;
@@ -47,6 +48,9 @@ public:
     void run();
     void initialise();
     void startNewGame();
+    void selectPartner();
+    void drawEvents();
+    void playEvents();
 
 
 };

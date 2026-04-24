@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 
+#include "Choice.h"
+
 class Player {
     std::string name;
     int charm;
@@ -26,8 +28,15 @@ public:
     friend std::istream& operator>>(std::istream& is, Player& obj);
 
     void setName(std::string name){this->name=name;}
+    int getDignity(){return this->dignity;}
+    int getVibe(){return this->vibe;}
+    int getCharm(){return this->charm;}
+    int getMoney(){return this->money;}
 
     void initialisePlayer();
+
+    void applyEffects(Choice& choice);
+    void applyEffects(int, int, int, int);
 };
 
 

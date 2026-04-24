@@ -17,6 +17,10 @@ protected:
     int avoidThreshold;
     std::string textAvoided;
     std::string textResult;
+    int deltaCharm;
+    int deltaDignity;
+    int deltaVibe;
+    int deltaMoney;
 
 public:
     RandomEvent();
@@ -28,9 +32,13 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const RandomEvent& obj);
     friend std::istream& operator>>(std::istream& is, RandomEvent& obj);
 
-    // void trigger() override;
-
+    void trigger(Player& player) override;
+    bool checkAvoid(Player& player);
     void loadFromFile(std::ifstream &fin) override;
+
+    int getChance(){return this->chance;}
+    int getPhase(){return this->phase;}
+    std::string& getText(){return this->text;}
 };
 
 

@@ -37,6 +37,14 @@ public:
 
     void parseFromString(const std::string& line);
 
+    std::string& getText(){return this->text;}
+    int getPrice(){return this->price;}
+    int getCharm(){return this->deltaCharm;}
+    int getVibe(){return this->deltaVibe;}
+    int getDignity(){return this->deltaDignity;}
+    int getMoney(){return this->deltaMoney;}
+    ChoiceEvent* getFollowUp() { return followUp; }
+
 
 
 

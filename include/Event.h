@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 
+#include "Player.h"
+
 class Event{
 protected:
     std::string text;
@@ -27,7 +29,8 @@ public:
 
     virtual void loadFromFile(std::ifstream& fin)=0;
 
-    // virtual void trigger()=0;
+    virtual void trigger(Player& player)=0;
+    virtual std::string& getText(){return this->text;}
 };
 
 #endif //GETREADYFORYOURDATE_EVENT_H

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "ChoiceEvent.h"
 #include "Choice.h"
+#include "Player.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -86,4 +87,28 @@ void ChoiceEvent::loadFromFile(ifstream &fin) {
         c.parseFromString(line);
         choices.push_back(c);
     }
+}
+
+void ChoiceEvent::trigger(Player& player) {
+    cout<<this->text<<"\n";
+
+    for (int i=0;i<choices.size();i++) {
+        cout<<i+1<<". "<<choices[i].getText()<<" | Price: ";
+        cout<<choices[i].getPrice()<<"\n";
+    }
+
+    cout<<"Please type your answer.\n";
+
+    int choice;
+    cin>>choice;
+
+    for (int i=0;i<choices.size();i++) {
+        if (choice-1==i)player.applyEffects(choices[i]);
+    }
+
+    ChoiceEvent* followUp = choices[choice-1].getFollowUp();
+    if (followUp != nullptr) {
+        followUp->trigger(player);
+    }
+
 }
