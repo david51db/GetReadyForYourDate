@@ -9,6 +9,7 @@
 #include <iostream>
 
 class MiniGame {
+protected:
     int reward;
     std::string text;
 
@@ -25,7 +26,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MiniGame& obj);
     friend std::istream& operator>>(std::istream& is, MiniGame& obj);
 
-    // virtual void play()=0;
+    virtual int play()=0;
+    int getReward(){return reward;}
 };
 
 

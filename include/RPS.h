@@ -20,7 +20,8 @@ public:
     friend std::istream& operator>>(std::istream& is, RPS& obj);
 
 
-    // virtual void play()=0;
+    int play() override;
+
 };
 
 

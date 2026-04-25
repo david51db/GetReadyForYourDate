@@ -143,14 +143,36 @@ void ChainEvent::loadFromFile(ifstream &fin) {
 }
 
 void ChainEvent::trigger(Player& player) {
-    cout << text << "\n";
+    cout << text << "\n\n";
+
     bool avoided = this->checkAvoid(player);
-    if (!avoided) {
-        cout << textResult << "\n\n";
-        player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
-        ChoiceEvent::trigger(player);
+
+    if (avoided) {
+        cout << textAvoided << "\n\n";
+        return;
     }
 
+
+    cout << textResult << "\n\n";
+    player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
+
+    if (choices.empty()) return;
+
+    for (int i=0;i<(int)choices.size();i++) {
+        cout << i+1 << ". " << choices[i].getText() << " | Price: " << choices[i].getPrice() << "\n";
+    }
+
+    cout << "Please type your answer.\n";
+    int choice;
+    cin >> choice;
+
+    if (choice >= 1 && choice <= (int)choices.size()) {
+        player.applyEffects(choices[choice-1]);
+        ChoiceEvent* followUp = choices[choice-1].getFollowUp();
+        if (followUp != nullptr) {
+            followUp->trigger(player);
+        }
+    }
 
 }
 

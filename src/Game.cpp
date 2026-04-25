@@ -13,9 +13,13 @@
 #include "ChoiceEvent.h"
 #include "RandomEvent.h"
 #include "Game.h"
+
+#include "Ad.h"
+#include "RPS.h"
 using namespace std;
 #include <fstream>
 #include "Trait.h"
+#include <limits>
 Game::Game() {
     this->player= new Player();
     this->partner= new Partner();
@@ -287,6 +291,20 @@ void Game::loadAllEvents() {
         }
     }
 
+    ifstream finAds("data/ads.txt");
+    if (!finAds.is_open())cout<<"could not open finads";
+
+    if (finAds.is_open()) {
+        while (finAds.peek()!=EOF) {
+            finAds>>ws;
+            if (finAds.eof()) break;
+
+            Ad* a=new Ad();
+            a->loadFromFile(finAds);
+            adPool.push_back(a);
+        }
+    }
+
 }
 
 void Game::connectFollowUps() {
@@ -297,7 +315,7 @@ void Game::connectFollowUps() {
             for (Choice& c: ce->getChoices()) {
                 int id=c.getFollowUpId();
 
-                if (id>=0&&id<(int)secretFollowUps.size())c.setFollowUpPointer(secretFollowUps[id]);
+                if (id>=101&&(id-101)<(int)secretFollowUps.size())c.setFollowUpPointer(secretFollowUps[id-101]);
             }
         }
     }
@@ -307,8 +325,8 @@ void Game::connectFollowUps() {
         if (che != nullptr) {
             for (Choice& c : che->getChoices()) {
                 int id = c.getFollowUpId();
-                if (id >= 0 && id < (int)secretFollowUps.size()) {
-                    c.setFollowUpPointer(secretFollowUps[id]);
+                if (id >= 101 && (id-101) < (int)secretFollowUps.size()) {
+                    c.setFollowUpPointer(secretFollowUps[id-101]);
                 }
             }
         }
@@ -319,7 +337,7 @@ void Game::connectFollowUps() {
 
 void Game::initialise() {
 
-    player->initialisePlayer();
+    player->newPlayer();
 
 }
 
@@ -343,6 +361,7 @@ void Game::run() {
         cout << "0. Exit\n\n";
         cout << "Choice:\n";
         cin >> choice;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
             case 1: this->startNewGame(); break;
@@ -359,6 +378,8 @@ void Game::startNewGame() {
     this->selectPartner();
     this->drawEvents();
     this->playEvents();
+    this->playEnding();
+
 
 }
 
@@ -464,11 +485,84 @@ void Game::drawEvents() {
 
 void Game::playEvents() {
 
+
+    RPS rps("Rock Paper Scissors", 40);
+
     for (Event* e: events) {
-        e->trigger(*this->player);
-        if (player->getCharm()<-500 || player->getVibe()<-500 || player->getDignity()<-500 || player->getMoney()<-500) {
-            cout<<"Game over.";
-            break;
+        ChoiceEvent* ce = dynamic_cast<ChoiceEvent*>(e);
+        if (ce != nullptr) {
+            int cantAfford = 0;
+            for (Choice& c : ce->getChoices())
+                if (player->getMoney() < c.getPrice()) cantAfford++;
+
+            if (cantAfford >= 2) {
+                cout << "You can't afford most options. Play a minigame?\n";
+                cout << "1. Ad\n2. RPS\n0. Skip\n";
+                int mg; cin >> mg;
+                if (mg == 1) player->modifyMoney(selectAd()->play());
+                else if (mg == 2) player->modifyMoney(rps.play());
+            }
         }
+
+        e->trigger(*this->player);
+        if (player->getCharm()<-500 || player->getVibe()<-500 ||
+            player->getDignity()<-500 || player->getMoney()<-500) break;
     }
+}
+
+void Game::playEnding() {
+
+    if (player->getCharm()<-500 || player->getDignity()<-500 ||player->getVibe()<-500) {
+        cout<<"Game over. You literally died.";
+        return;
+    }
+
+    float endingScore=this->calculateEndingScore();
+
+
+    cout << "\n=== DATE RESULTS ===\n";
+    cout << *player;
+    cout << "Final score: " << endingScore << "\n\n";
+
+
+    if (endingScore<0) {
+        cout<<"They called an Uber before dessert...\nTerrible ending.\n";
+        player->applyEffects(0,0,0,-50);
+    }
+    else if (endingScore>0 && endingScore<200) {
+        cout<<"You thought the date was decent but after that they ghosted you.\nBad ending.\n";
+        player->applyEffects(0,0,0,-20);
+    }
+    else if (endingScore>200 && endingScore<900) {
+        cout<<"The date went great! You really hit it off!\nGood ending.\n";
+        player->applyEffects(0,0,0,30);
+    }
+    else if (endingScore>900){
+        cout<<"You decided to take a walk after dinner and stayed for 3 more hours. You have a special connection.\nBest ending.\n";
+        player->applyEffects(0,0,0,90);
+    }
+}
+
+float Game::calculateEndingScore() {
+    int totalWeightCharm = 0;
+    int totalWeightDignity = 0;
+    int totalWeightVibe = 0;
+
+    for (Trait* t : partner->getTraits()) {
+        totalWeightCharm += t->getWeightCharm();
+        totalWeightDignity += t->getWeightDignity();
+        totalWeightVibe += t->getWeightVibe();
+    }
+
+    float score = player->getCharm() * totalWeightCharm
+                + player->getDignity() * totalWeightDignity
+                + player->getVibe() * totalWeightVibe;
+
+    return score;
+}
+
+Ad* Game::selectAd() {
+
+    return adPool[rand()%adPool.size()];
+
 }

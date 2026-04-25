@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "Ad.h"
 #include "Partner.h"
 #include "Player.h"
 #include "Event.h"
@@ -26,6 +28,7 @@ class Game {
     std::vector<RandomEvent*> randomPool;
     std::vector<Partner*> partnerPool;
     std::vector<Trait*> traitPool;
+    std::vector<Ad*> adPool;
     bool running;
     int eventIndex;
     std::vector<ChoiceEvent*> secretFollowUps;
@@ -51,7 +54,9 @@ public:
     void selectPartner();
     void drawEvents();
     void playEvents();
-
+    void playEnding();
+    float calculateEndingScore();
+    Ad* selectAd();
 
 };
 

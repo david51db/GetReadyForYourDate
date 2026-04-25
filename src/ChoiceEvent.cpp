@@ -6,8 +6,11 @@
 #include "ChoiceEvent.h"
 #include "Choice.h"
 #include "Player.h"
+#include "Game.h"
 #include <vector>
 #include <string>
+
+#include "RPS.h"
 using namespace std;
 #include <sstream>
 #include <fstream>
@@ -90,25 +93,30 @@ void ChoiceEvent::loadFromFile(ifstream &fin) {
 }
 
 void ChoiceEvent::trigger(Player& player) {
-    cout<<this->text<<"\n";
+    cout << this->text << "\n\n";
 
-    for (int i=0;i<choices.size();i++) {
-        cout<<i+1<<". "<<choices[i].getText()<<" | Price: ";
-        cout<<choices[i].getPrice()<<"\n";
+
+
+    for (int i=0;i<(int)choices.size();i++) {
+        cout << i+1 << ". " << choices[i].getText() << " | Price: " << choices[i].getPrice() << "\n";
     }
 
-    cout<<"Please type your answer.\n";
+    cout << "Please type your answer.\n";
 
     int choice;
-    cin>>choice;
+    cin >> choice;
+    if (choice >= 1 && choice <= (int)choices.size()) {
 
-    for (int i=0;i<choices.size();i++) {
-        if (choice-1==i)player.applyEffects(choices[i]);
-    }
+        if (player.getMoney() < choices[choice-1].getPrice()) {
+            cout << "You can't afford this option!\n";
+            return;
+        }
+        player.applyEffects(choices[choice-1]);
 
-    ChoiceEvent* followUp = choices[choice-1].getFollowUp();
-    if (followUp != nullptr) {
-        followUp->trigger(player);
+        ChoiceEvent* followUp = choices[choice-1].getFollowUp();
+        if (followUp != nullptr) {
+            followUp->trigger(player);
+        }
     }
 
 }

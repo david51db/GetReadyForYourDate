@@ -6,7 +6,8 @@
 #include "MiniGame.h"
 #include <iostream>
 using namespace std;
-
+#include <fstream>
+#include <sstream>
 Ad::Ad():MiniGame() {
     duration=0;
 }
@@ -50,4 +51,35 @@ istream& operator>>(istream& is, Ad& obj) {
 
     return is;
 
+}
+
+void Ad::loadFromFile(ifstream &fin) {
+    string line;
+    string token;
+
+    getline(fin, line);
+
+    while (line.empty()&&!fin.eof())getline(fin, line);
+
+    stringstream ss(line);
+    getline(ss, token, '|');
+    this->text=token;
+
+    getline(ss, token, '|');
+    this->duration=stoi(token);
+
+    getline(ss, token);
+    this->reward=stoi(token);
+}
+
+
+int Ad::play() {
+    cout << "\n=== WATCHING AD ===\n";
+    cout << "Watching a " << duration << " second ad...\n";
+    cout<<text;
+    cout << "Press Enter to skip.\n";
+    cin.ignore();
+    cin.get();
+    cout << "Ad finished! +" << getReward() << " money.\n";
+    return getReward();
 }

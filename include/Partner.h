@@ -30,6 +30,7 @@ public:
 
     void loadFromFile(std::ifstream &fin);
     void loadTraits(std::vector<Trait*>& traitPool);
+    std::vector<Trait*>& getTraits(){return this->traits;}
 };
 
 

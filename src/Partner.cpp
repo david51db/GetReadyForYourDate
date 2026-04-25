@@ -27,11 +27,16 @@ Partner::Partner(const Partner &obj) {
     this->name=obj.name;
     this->traitsName=obj.traitsName;
     this->secretTrait=obj.secretTrait;
+    this->traits=obj.traits;
 }
 
 Partner& Partner::operator=(const Partner &obj) {
     if (this==&obj) return *this;
 
+    traits.clear();
+
+
+    this->traits=obj.traits;
     this->name=obj.name;
     this->traitsName=obj.traitsName;
     this->secretTrait=obj.secretTrait;

@@ -37,5 +37,37 @@ istream& operator>>(istream& is, RPS& obj) {
     return is;
 }
 
+int RPS::play() {
+    cout << "\n=== ROCK PAPER SCISSORS ===\n";
+    cout << "Enter r for ROCK, p for PAPER, s for SCISSORS\n";
 
+    int reward=getReward();
+    char playerMove;
+    while (true) {
+        cin >> playerMove;
+        if (playerMove == 'p' || playerMove == 'r' || playerMove == 's') break;
+        cout << "Invalid move. Try again.\n";
+    }
+
+    int move =rand()% 3;
+    char computerMove;
+    if (move==0) computerMove = 'p';
+    else if (move == 1) computerMove = 's';
+    else computerMove = 'r';
+
+    cout << "Your move: " << playerMove << " | Computer: " << computerMove << "\n";
+
+    if (playerMove == computerMove) {
+        cout << "Draw! No reward.\n";
+        return 0;
+    }
+    if ((playerMove=='s' && computerMove=='p') ||
+        (playerMove=='p' && computerMove=='r') ||
+        (playerMove=='r' && computerMove=='s')) {
+        cout << "You won! +" << reward << " money.\n";
+        return reward;
+        }
+    cout << "Computer won. No reward.\n";
+    return 0;
+}
 

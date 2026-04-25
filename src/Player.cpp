@@ -73,7 +73,7 @@ istream& operator>>(istream& is, Player& obj) {
     return is;
 }
 
-void Player::initialisePlayer() {
+void Player::newPlayer() {
 
     string playerName;
     cin>>playerName;
@@ -88,12 +88,20 @@ void Player::initialisePlayer() {
 
 }
 
+void Player::initialisePlayer() {
+    this->charm=30;
+    this->dignity=30;
+    this->vibe=30;
+}
+
 void Player::applyEffects(Choice& choice) {
 
     this->charm=choice.getCharm()+this->charm;
     this->vibe=choice.getVibe()+this->vibe;
     this->dignity=choice.getDignity()+this->dignity;
     this->money=choice.getMoney()+this->money;
+
+    printEffects(choice.getCharm(), choice.getDignity(), choice.getVibe(), choice.getMoney());
 }
 
 void Player::applyEffects(int deltaVibe, int deltaCharm, int deltaDignity, int deltaMoney) {
@@ -101,4 +109,19 @@ void Player::applyEffects(int deltaVibe, int deltaCharm, int deltaDignity, int d
     this->vibe=deltaVibe+this->vibe;
     this->dignity=deltaDignity+this->dignity;
     this->money=deltaMoney+this->money;
+
+
+    printEffects(deltaCharm, deltaDignity, deltaVibe, deltaMoney);
+}
+
+void Player::modifyMoney(int money) {
+    this->money+=money;
+}
+
+void Player::printEffects(int dCharm, int dDignity, int dVibe, int dMoney) {
+    if (dCharm)   cout << "Charm: "   << (dCharm>0   ? "+" : "") << dCharm   << "  ";
+    if (dDignity) cout << "Dignity: " << (dDignity>0 ? "+" : "") << dDignity << "  ";
+    if (dVibe)    cout << "Vibe: "    << (dVibe>0    ? "+" : "") << dVibe    << "  ";
+    if (dMoney)   cout << "Money: "   << (dMoney>0   ? "+" : "") << dMoney   << "  ";
+    cout << "\n\n";
 }

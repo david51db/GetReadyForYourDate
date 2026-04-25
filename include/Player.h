@@ -32,11 +32,12 @@ public:
     int getVibe(){return this->vibe;}
     int getCharm(){return this->charm;}
     int getMoney(){return this->money;}
-
+    void modifyMoney(int);
     void initialisePlayer();
-
+    void newPlayer();
     void applyEffects(Choice& choice);
     void applyEffects(int, int, int, int);
+    void printEffects(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney);
 };
 
 

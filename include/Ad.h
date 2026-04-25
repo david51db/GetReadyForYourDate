@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-class Ad: virtual public MiniGame {
+class Ad: public MiniGame {
     int duration;
 
 public:
@@ -23,7 +23,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Ad& obj);
     friend std::istream& operator>>(std::istream& is, Ad& obj);
 
-    // virtual void play()=0;
+    void loadFromFile(std::ifstream& fin);
+
+    int play() override;
 };
 
 
