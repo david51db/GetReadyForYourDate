@@ -59,7 +59,8 @@ public:
     float calculateEndingScore();
     Ad* selectAd();
     void suggestOffer(Event&, RPS&);
-
+    void saveGame();
+    void loadGame();
 };
 
 

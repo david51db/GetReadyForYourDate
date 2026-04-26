@@ -4,7 +4,11 @@
 
 #include <iostream>
 #include "ChainEvent.h"
+
+#include <limits>
+
 #include "ChoiceEvent.h"
+#include "Exceptions.h"
 #include "RandomEvent.h"
 using namespace std;
 #include <fstream>
@@ -164,15 +168,31 @@ void ChainEvent::trigger(Player& player) {
 
     cout << "Please type your answer.\n";
     int choice;
-    cin >> choice;
-
-    if (choice >= 1 && choice <= (int)choices.size()) {
-        player.applyEffects(choices[choice-1]);
-        ChoiceEvent* followUp = choices[choice-1].getFollowUp();
-        if (followUp != nullptr) {
-            followUp->trigger(player);
+    while (true) {
+        try {
+            if (!(cin >> choice)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            }
+            if (choice < 1 || choice > (int)choices.size())
+                throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            break;
+        } catch (const InvalidInputException& e) {
+            cout << e.what() << ". Try again.\n";
         }
+
+
     }
+
+    if (player.getMoney() < choices[choice-1].getPrice()) {
+        cout << "You can't afford this option!\n";
+        return;
+    }
+    player.applyEffects(choices[choice-1]);
+    ChoiceEvent* followUp = choices[choice-1].getFollowUp();
+    if (followUp != nullptr)
+        followUp->trigger(player);
 
 }
 

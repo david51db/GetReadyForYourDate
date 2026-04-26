@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include "ChoiceEvent.h"
+
+#include <limits>
+
 #include "Choice.h"
 #include "Player.h"
 #include "Game.h"
@@ -105,24 +108,32 @@ void ChoiceEvent::trigger(Player& player) {
     cout << "Please type your answer.\n";
 
     int choice;
-    cin >> choice;
+    while (true) {
+        try {
+            if (!(cin >> choice)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            }
+            if (choice < 1 || choice > (int)choices.size())
+                throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            break;
 
-    // în ChoiceEvent::trigger()
-    if (choice < 1 || choice > (int)choices.size()) {
-        throw InvalidInputException("Choice must be between 1 and " + to_string(choices.size()));
-    }
-    if (choice >= 1 && choice <= (int)choices.size()) {
 
-        if (player.getMoney() < choices[choice-1].getPrice()) {
-            cout << "You can't afford this option!\n";
-            return;
+        } catch (const InvalidInputException& e) {
+            cout << e.what() << ". Try again.\n";
         }
-        player.applyEffects(choices[choice-1]);
 
-        ChoiceEvent* followUp = choices[choice-1].getFollowUp();
-        if (followUp != nullptr) {
-            followUp->trigger(player);
-        }
+
     }
+
+    if (player.getMoney() < choices[choice-1].getPrice()) {
+        cout << "You can't afford this option!\n";
+        return;
+    }
+    player.applyEffects(choices[choice-1]);
+    ChoiceEvent* followUp = choices[choice-1].getFollowUp();
+    if (followUp != nullptr)
+        followUp->trigger(player);
 
 }

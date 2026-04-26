@@ -374,7 +374,20 @@ void Game::run() {
 
         switch (choice) {
             case 1: this->startNewGame(); break;
-            case 2: break;
+            case 2:
+                try {
+                    this->loadGame();
+                    if (events.empty()) {
+                        cout << "No save found or save is empty.\n";
+                        break;
+                    }
+                    cout << "Resuming game for " << player->getName() << "...\n";
+                    this->playEvents();
+                    this->playEnding();
+                } catch (const FileNotFoundException& e) {
+                    cout << "No save found.\n";
+                }
+                break;
             case 3: cout << *player; break;
             case 0: break;
         }
@@ -416,16 +429,19 @@ void Game::selectPartner() {
     cout << "3. " << partnerPool[indexPartner3]->getName() << ": ";
     partnerPool[indexPartner3]->showTraits();
     cout << ".\n";
-
     int choice;
     while (true) {
         try {
-            cin >> choice;
+            if (!(cin >> choice)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InvalidInputException("option must be 1, 2 or 3");
+            }
             if (choice < 1 || choice > 3)
                 throw InvalidInputException("option must be 1, 2 or 3");
             break;
         } catch (const InvalidInputException& e) {
-            cout << "Invalid input: " << e.what() << ". Try again.\n";
+            cout << e.what() << ". Try again.\n";
         }
     }
 
@@ -515,7 +531,21 @@ void Game::suggestOffer(Event& e, RPS& rps) {
     if (cantAfford >= 2) {
         cout << "It seems you are low on funds. Play a minigame?\n";
         cout << "1. Ad\n2. RPS\n0. Skip\n";
-        int mg; cin >> mg;
+        int mg;
+        while (true) {
+            try {
+                if (!(cin >> mg)) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw InvalidInputException("option must be 0, 1 or 2");
+                }
+                if (mg != 0 && mg != 1 && mg != 2)
+                    throw InvalidInputException("option must be 0, 1 or 2");
+                break;
+            } catch (const InvalidInputException& e) {
+                cout << e.what() << ". Try again.\n";
+            }
+        }
         if (mg == 1) player->modifyMoney(selectAd()->play());
         else if (mg == 2) player->modifyMoney(rps.play());
     }
@@ -527,13 +557,14 @@ void Game::playEvents() {
 
     RPS rps("Rock Paper Scissors", 40);
 
-    for (Event* e: events) {
-        suggestOffer(*e, rps);
+    for (eventIndex=0; eventIndex<(int)events.size(); eventIndex++) {
+        suggestOffer(*events[eventIndex], rps);
         try {
-            e->trigger(*this->player);
+            events[eventIndex]->trigger(*this->player);
         } catch (const InvalidInputException& e) {
             cout << "Invalid input: " << e.what() << ". Skipping...\n";
         }
+        saveGame();
         if (player->getCharm()<-500 || player->getVibe()<-500 ||
             player->getDignity()<-500 || player->getMoney()<-500) break;
     }
@@ -594,4 +625,50 @@ Ad* Game::selectAd() {
 
     return adPool[rand()%adPool.size()];
 
+}
+
+void Game::saveGame() {
+    ofstream fout("data/save.txt");
+    if (!fout.is_open()) throw FileNotFoundException("data/save.txt");
+
+    fout << player->getName() << "\n";
+    fout << player->getCharm() << "\n";
+    fout << player->getDignity() << "\n";
+    fout << player->getVibe() << "\n";
+    fout << player->getMoney() << "\n";
+    fout << partner->getName() << "\n";
+
+    fout << (events.size() - eventIndex) << "\n";
+    for (int i = eventIndex; i < (int)events.size(); i++) {
+        for (int j = 0; j < (int)eventPool.size(); j++)
+            if (eventPool[j] == events[i]) { fout << "C " << j << "\n"; break; }
+        for (int j = 0; j < (int)randomPool.size(); j++)
+            if (randomPool[j] == events[i]) { fout << "R " << j << "\n"; break; }
+    }
+}
+
+void Game::loadGame() {
+    ifstream fin("data/save.txt");
+    if (!fin.is_open()) throw FileNotFoundException("data/save.txt");
+
+    string name; int charm, dignity, vibe, money;
+    getline(fin, name);
+    fin >> charm >> dignity >> vibe >> money;
+    fin.ignore();
+    *player = Player(name, charm, dignity, vibe, money);
+
+    string partnerName;
+    getline(fin, partnerName);
+    for (auto p : partnerPool)
+        if (p->getName() == partnerName) { *partner = *p; break; }
+
+    events.clear();
+    eventIndex = 0;
+    int nrEvents; fin >> nrEvents; fin.ignore();
+    for (int i = 0; i < nrEvents; i++) {
+        char type; int idx;
+        fin >> type >> idx; fin.ignore();
+        if (type == 'C') events.push_back(eventPool[idx]);
+        else if (type == 'R') events.push_back(randomPool[idx]);
+    }
 }

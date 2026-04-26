@@ -38,6 +38,7 @@ public:
     void applyEffects(Choice& choice);
     void applyEffects(int, int, int, int);
     void printEffects(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney);
+    std::string& getName() { return name; }
 };
 
 

@@ -3,6 +3,9 @@
 //
 
 #include <iostream>
+#include <limits>
+
+#include "Exceptions.h"
 using namespace std;
 #include "RPS.h"
 #include "MiniGame.h"
@@ -44,9 +47,18 @@ int RPS::play() {
     int reward=getReward();
     char playerMove;
     while (true) {
-        cin >> playerMove;
-        if (playerMove == 'p' || playerMove == 'r' || playerMove == 's') break;
-        cout << "Invalid move. Try again.\n";
+        try {
+            if (!(cin >> playerMove)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InvalidInputException("move must be r, p or s");
+            }
+            if (playerMove != 'r' && playerMove != 'p' && playerMove != 's')
+                throw InvalidInputException("move must be r, p or s");
+            break;
+        } catch (const InvalidInputException& e) {
+            cout << e.what() << ". Try again.\n";
+        }
     }
 
     int move =rand()% 3;

@@ -20,7 +20,7 @@ public:
 
 class InvalidInputException: public GameException {
 public:
-    explicit InvalidInputException(const std::string& msg):GameException(msg){}
+    explicit InvalidInputException(const std::string& msg):GameException("Invalid input: "+msg){}
 };
 
 
