@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 
+#include "Exceptions.h"
 #include "RPS.h"
 using namespace std;
 #include <sstream>
@@ -105,6 +106,11 @@ void ChoiceEvent::trigger(Player& player) {
 
     int choice;
     cin >> choice;
+
+    // în ChoiceEvent::trigger()
+    if (choice < 1 || choice > (int)choices.size()) {
+        throw InvalidInputException("Choice must be between 1 and " + to_string(choices.size()));
+    }
     if (choice >= 1 && choice <= (int)choices.size()) {
 
         if (player.getMoney() < choices[choice-1].getPrice()) {

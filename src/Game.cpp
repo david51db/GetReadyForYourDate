@@ -1,7 +1,7 @@
 //
 // Created by David on 4/22/2026.
 //
-
+using namespace std;
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,13 +13,13 @@
 #include "ChoiceEvent.h"
 #include "RandomEvent.h"
 #include "Game.h"
-
 #include "Ad.h"
 #include "RPS.h"
-using namespace std;
 #include <fstream>
 #include "Trait.h"
 #include <limits>
+#include "Exceptions.h"
+
 Game::Game() {
     this->player= new Player();
     this->partner= new Partner();
@@ -202,7 +202,7 @@ istream& operator>>(istream& is, Game& obj) {
 void Game::loadAllEvents() {
     ifstream finChoice("data/choiceEvents.txt");
 
-    if (!finChoice.is_open())cout<<"could not open finchoice";
+    if (!finChoice.is_open()) throw FileNotFoundException("data/choiceEvents.txt");
 
     if (finChoice.is_open()) {
         while (finChoice.peek()!=EOF) {
@@ -217,7 +217,7 @@ void Game::loadAllEvents() {
     finChoice.close();
 
     ifstream finRandom("data/randomEvents.txt");
-    if (!finRandom.is_open())cout<<"could not open finrandom";
+    if (!finRandom.is_open()) throw FileNotFoundException("data/randomEvents.txt");
 
     if (finRandom.is_open()) {
         while (finRandom.peek()!=EOF) {
@@ -232,7 +232,7 @@ void Game::loadAllEvents() {
     finRandom.close();
 
     ifstream finChain("data/chainEvents.txt");
-    if (!finChain.is_open())cout<<"could not open finchain";
+    if (!finChain.is_open()) throw FileNotFoundException("data/chainEvents.txt");
 
     if (finChain.is_open()) {
         while (finChain.peek()!=EOF) {
@@ -248,7 +248,7 @@ void Game::loadAllEvents() {
 
     ifstream finFollow("data/followUpEvents.txt");
 
-    if (!finFollow.is_open())cout<<"could not open finfollow";
+    if (!finFollow.is_open()) throw FileNotFoundException("data/followUpEvents.txt");
 
     if (finFollow.is_open()) {
         while (finFollow.peek()!=EOF) {
@@ -263,7 +263,7 @@ void Game::loadAllEvents() {
     finFollow.close();
 
     ifstream finTraits("data/traits.txt");
-    if (!finTraits.is_open())cout<<"could not open fintraits";
+    if (!finTraits.is_open())throw FileNotFoundException("data/traits.txt");
 
     if (finTraits.is_open()) {
         while (finTraits.peek()!=EOF) {
@@ -277,7 +277,7 @@ void Game::loadAllEvents() {
     }
 
     ifstream finPartners("data/partners.txt");
-    if (!finPartners.is_open())cout<<"could not open finpartners";
+    if (!finPartners.is_open())throw FileNotFoundException("data/partners.txt");
 
     if (finPartners.is_open()) {
         while (finPartners.peek()!=EOF) {
@@ -292,7 +292,7 @@ void Game::loadAllEvents() {
     }
 
     ifstream finAds("data/ads.txt");
-    if (!finAds.is_open())cout<<"could not open finads";
+    if (!finAds.is_open())throw FileNotFoundException("data/ads.txt");
 
     if (finAds.is_open()) {
         while (finAds.peek()!=EOF) {
@@ -343,33 +343,42 @@ void Game::initialise() {
 
 
 void Game::run() {
-
-
-    cout<<"Welcome!\n";
-    cout<<"What is your name?\n";
-
+    cout << "Welcome!\n";
+    cout << "What is your name?\n";
     this->initialise();
 
     int choice;
     do {
-
-        cout<<"\n";
         cout << "\n===== GET READY FOR YOUR DATE =====\n";
         cout << "1. Start new game\n";
         cout << "2. Load game\n";
         cout << "3. View stats\n";
         cout << "0. Exit\n\n";
         cout << "Choice:\n";
-        cin >> choice;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        while (true) {
+            try {
+                if (!(cin >> choice)) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw InvalidInputException("Option must be 0, 1, 2 or 3");
+                }
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (choice != 0 && choice != 1 && choice != 2 && choice != 3)
+                    throw InvalidInputException("Option must be 0, 1, 2 or 3");
+                break;
+            } catch (const InvalidInputException& e) {
+                cout << e.what() << ". Try again.\n";
+            }
+        }
 
         switch (choice) {
             case 1: this->startNewGame(); break;
             case 2: break;
-            case 3: cout<<*player; break;
-
+            case 3: cout << *player; break;
+            case 0: break;
         }
-    }while (choice!=0);
+    } while (choice != 0);
 }
 
 void Game::startNewGame() {
@@ -384,35 +393,46 @@ void Game::startNewGame() {
 }
 
 void Game::selectPartner() {
-    cout<<"Please choose your partner by typing its corresponding number.\n";
+    cout << "Please choose your partner by typing its corresponding number.\n";
+
+    if (partnerPool.empty())
+        throw GameException("No partners loaded. Check data/partners.txt.");
+    if (partnerPool.size() < 3)
+        throw GameException("Not enough partners loaded (need at least 3).");
 
     int indexPartner1 = rand() % partnerPool.size();
-    int indexPartner2=rand() % partnerPool.size();
-    int indexPartner3=rand() % partnerPool.size();
+    int indexPartner2 = rand() % partnerPool.size();
+    int indexPartner3 = rand() % partnerPool.size();
 
-    while (indexPartner1==indexPartner2)indexPartner2=rand() % partnerPool.size();
-    while (indexPartner3==indexPartner1 || indexPartner3==indexPartner2)indexPartner3=rand() % partnerPool.size();
+    while (indexPartner1 == indexPartner2) indexPartner2 = rand() % partnerPool.size();
+    while (indexPartner3 == indexPartner1 || indexPartner3 == indexPartner2) indexPartner3 = rand() % partnerPool.size();
 
-
-    cout<<"1. "<<partnerPool[indexPartner1]->getName()<<": ";
+    cout << "1. " << partnerPool[indexPartner1]->getName() << ": ";
     partnerPool[indexPartner1]->showTraits();
-    cout<<".\n";
-
-    cout<<"2. "<<partnerPool[indexPartner2]->getName()<<": ";
+    cout << ".\n";
+    cout << "2. " << partnerPool[indexPartner2]->getName() << ": ";
     partnerPool[indexPartner2]->showTraits();
-    cout<<".\n";
-
-    cout<<"3. "<<partnerPool[indexPartner3]->getName()<<": ";
+    cout << ".\n";
+    cout << "3. " << partnerPool[indexPartner3]->getName() << ": ";
     partnerPool[indexPartner3]->showTraits();
-    cout<<".\n";
+    cout << ".\n";
 
     int choice;
-    cin>>choice;
+    while (true) {
+        try {
+            cin >> choice;
+            if (choice < 1 || choice > 3)
+                throw InvalidInputException("option must be 1, 2 or 3");
+            break;
+        } catch (const InvalidInputException& e) {
+            cout << "Invalid input: " << e.what() << ". Try again.\n";
+        }
+    }
 
-    switch(choice){
-        case 1: *this->partner= *(partnerPool[indexPartner1]); break;
-        case 2: *this->partner=*(partnerPool[indexPartner2]); break;
-        case 3: *this->partner=*(partnerPool[indexPartner3]); break;
+    switch (choice) {
+        case 1: *this->partner = *(partnerPool[indexPartner1]); break;
+        case 2: *this->partner = *(partnerPool[indexPartner2]); break;
+        case 3: *this->partner = *(partnerPool[indexPartner3]); break;
     }
 }
 
@@ -483,28 +503,37 @@ void Game::drawEvents() {
 
 }
 
+void Game::suggestOffer(Event& e, RPS& rps) {
+
+    ChoiceEvent* ce = dynamic_cast<ChoiceEvent*>(&e);
+    if (ce == nullptr) return;
+
+    int cantAfford = 0;
+    for (Choice& c : ce->getChoices())
+        if (player->getMoney() < c.getPrice()) cantAfford++;
+
+    if (cantAfford >= 2) {
+        cout << "It seems you are low on funds. Play a minigame?\n";
+        cout << "1. Ad\n2. RPS\n0. Skip\n";
+        int mg; cin >> mg;
+        if (mg == 1) player->modifyMoney(selectAd()->play());
+        else if (mg == 2) player->modifyMoney(rps.play());
+    }
+}
+
+
 void Game::playEvents() {
 
 
     RPS rps("Rock Paper Scissors", 40);
 
     for (Event* e: events) {
-        ChoiceEvent* ce = dynamic_cast<ChoiceEvent*>(e);
-        if (ce != nullptr) {
-            int cantAfford = 0;
-            for (Choice& c : ce->getChoices())
-                if (player->getMoney() < c.getPrice()) cantAfford++;
-
-            if (cantAfford >= 2) {
-                cout << "You can't afford most options. Play a minigame?\n";
-                cout << "1. Ad\n2. RPS\n0. Skip\n";
-                int mg; cin >> mg;
-                if (mg == 1) player->modifyMoney(selectAd()->play());
-                else if (mg == 2) player->modifyMoney(rps.play());
-            }
+        suggestOffer(*e, rps);
+        try {
+            e->trigger(*this->player);
+        } catch (const InvalidInputException& e) {
+            cout << "Invalid input: " << e.what() << ". Skipping...\n";
         }
-
-        e->trigger(*this->player);
         if (player->getCharm()<-500 || player->getVibe()<-500 ||
             player->getDignity()<-500 || player->getMoney()<-500) break;
     }

@@ -17,6 +17,7 @@
 #include "ChainEvent.h"
 #include "ChoiceEvent.h"
 #include "RandomEvent.h"
+#include "RPS.h"
 #include "Trait.h"
 
 
@@ -57,6 +58,7 @@ public:
     void playEnding();
     float calculateEndingScore();
     Ad* selectAd();
+    void suggestOffer(Event&, RPS&);
 
 };
 

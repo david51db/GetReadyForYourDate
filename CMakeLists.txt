@@ -29,4 +29,5 @@ add_executable(GetReadyForYourDate main.cpp
         include/Game.h
         src/Game.cpp
         include/Trait.h
-        src/Trait.cpp)
+        src/Trait.cpp
+        include/Exceptions.h)
