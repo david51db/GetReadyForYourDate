@@ -22,9 +22,11 @@ protected:
     int deltaVibe;
     int deltaMoney;
 
+    bool checkAvoid(Player& player) const;
 public:
     RandomEvent();
-    RandomEvent(int chance, std::string avoidStat, int avoidThreshold, std::string textAvoided, std::string textResult, std::string text, bool phase);
+    RandomEvent(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, int chance, std::string &avoidStat,
+                int avoidThreshold, std::string &textAvoided, std::string& textResult, std::string &text, bool phase);
     RandomEvent(const RandomEvent& obj);
     RandomEvent& operator=(const RandomEvent& obj);
     ~RandomEvent() override;
@@ -33,12 +35,12 @@ public:
     friend std::istream& operator>>(std::istream& is, RandomEvent& obj);
 
     void trigger(Player& player) override;
-    bool checkAvoid(Player& player);
+
     void loadFromFile(std::ifstream &fin) override;
 
-    int getChance(){return this->chance;}
-    int getPhase(){return this->phase;}
-    std::string& getText(){return this->text;}
+    int getChance() const {return this->chance;}
+    int getPhase() const {return this->phase;}
+    std::string& getText() override{return this->text;}
 };
 
 

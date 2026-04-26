@@ -6,3 +6,13 @@ curious|2|2|1
 pragmatic|1|0|3
 charismatic|3|2|1
 smart|2|1|2
+shy|1|2|1
+adventurous|2|3|1
+artistic|2|1|2
+intellectual|1|1|3
+sporty|1|3|1
+foodie|2|2|2
+warm|3|1|1
+witty|2|2|1
+reserved|0|2|2
+independent|0|1|3

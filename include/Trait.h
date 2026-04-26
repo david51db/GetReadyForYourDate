@@ -20,11 +20,12 @@ public:
     ~Trait();
 
     friend std::ostream& operator<<(std::ostream& os, const Trait& obj);
+    friend std::istream& operator>>(std::istream& is, Trait& obj);
 
-    std::string const getName(){return this->name;}
-    int const getWeightCharm(){return this->weightCharm;}
-    int const getWeightVibe(){return this->weightVibe;}
-    int const getWeightDignity(){return this->weightDignity;}
+    const std::string& getName() const {return this->name;}
+    int const getWeightCharm() const {return this->weightCharm;}
+    int const getWeightVibe() const {return this->weightVibe;}
+    int const getWeightDignity() const {return this->weightDignity;}
 
     void loadFromFile(std::ifstream& fin);
 

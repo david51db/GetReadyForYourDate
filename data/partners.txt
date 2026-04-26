@@ -1,3 +1,10 @@
-Alex|3|funny|sarcastic|loud|hates_phone
-Angela|2|romantic|curious|loves_wine
-Mark|3|pragmatic|charismatic|smart|splits_bill
+Alex|3|funny|sarcastic|loud|hate_phone
+Angela|2|romantic|curious|love_wine
+Mark|3|pragmatic|charismatic|smart|split_bill
+Sofia|3|artistic|curious|warm|paint_everything
+Luca|3|adventurous|sporty|witty|arrive_late
+John|2|intellectual|reserved|love_books
+Austin|3|foodie|charismatic|warm|know_maths
+Taylor|3|shy|romantic|artistic|write_poetry
+Michael|3|independent|smart|witty|hates_selfishness
+Mia|3|funny|adventurous|warm|make_jokes

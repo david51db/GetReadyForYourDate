@@ -14,7 +14,7 @@ Event::Event(): id(++totalEvents) {
     phase=0;
 }
 
-Event::Event(string text, bool phase):id(++totalEvents) {
+Event::Event(string& text, bool phase):id(++totalEvents) {
     this->text=text;
     this->phase=phase;
 }

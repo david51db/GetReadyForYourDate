@@ -38,6 +38,14 @@ std::ostream &operator<<(std::ostream &os, const Trait &obj) {
     return os;
 }
 
+istream& operator>>(istream& is, Trait& obj) {
+    cout << "Name: "; is >> obj.name;
+    cout << "Weight Charm: "; is >> obj.weightCharm;
+    cout << "Weight Vibe: "; is >> obj.weightVibe;
+    cout << "Weight Dignity: "; is >> obj.weightDignity;
+    return is;
+}
+
 Trait::~Trait()=default;
 
 void Trait::loadFromFile(std::ifstream& fin) {

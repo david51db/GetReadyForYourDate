@@ -1,4 +1,64 @@
-You sense something...|1|3|dignity|50
-You got struck by lightning.
-You dodged a lightning.
+It starts raining right as you step outside.|0|20|dignity|35
+You arrive damp and visibly flustered. Not a great start.|-5|-5|-10|0
+You had an umbrella. You arrive looking effortlessly put together.
+---
+Your ride takes a wrong turn and adds ten minutes to the trip.|0|15|vibe|35
+You arrive out of breath and slightly panicked.|-10|-5|-10|0
+You stayed calm the whole ride and arrive completely composed.
+---
+You run into someone you know on the way and they want to chat.|0|20|charm|40
+You get pulled into a conversation and arrive rattled and late.|-5|0|-15|0
+You wave warmly and keep walking. You arrive on time and relaxed.
+---
+Your phone dies right before you get there.|0|18|dignity|35
+You arrive anxious and slightly lost.|-5|-10|-5|0
+You had enough battery. You arrive calm and prepared.
+---
+Your stomach growls loudly in a quiet moment.|1|25|dignity|40
+Your date pretends not to hear. The silence is excruciating.|-10|-15|-10|0
+You shift slightly. Nobody notices. You move on without a word.
+---
+A waiter spills something nearby and it splashes onto you.|1|15|dignity|40
+You feel self-conscious and distracted for the rest of the conversation.|-5|-10|-10|0
+You handle it so gracefully the waiter actually thanks you.
+---
+Someone at a nearby table is being extremely loud.|1|18|vibe|45
+The noise becomes distracting and the mood drops noticeably.|0|-5|-15|0
+You both lean in closer to hear each other. It somehow helps.
+---
+Your phone buzzes repeatedly in your pocket.|1|20|dignity|50
+You fidget visibly and your date notices you are somewhere else.|-5|-10|-10|0
+You keep it completely silent without even checking it once.
+---
+The person at the next table keeps glancing over at your date.|1|12|charm|40
+The attention makes things awkward and your date seems uncomfortable.|0|-5|-10|0
+Your date leans in and whispers that you are clearly the most interesting person here.
+---
+A couple nearby starts arguing loudly mid-dinner.|1|15|vibe|40
+The tension in the room becomes contagious and the mood drops.|0|0|-15|0
+You both glance over, share a look, and quietly feel better about your own evening.
+---
+The lights in the room dim unexpectedly.|1|10||0
+The atmosphere shifts and you feel noticeably more at ease.|5|5|10|0
+The atmosphere shifts and you feel noticeably more at ease.
+---
+A song comes on that neither of you expected to like but both clearly do.|1|8||0
+You share a look. The moment is small but surprisingly warm.|5|5|15|0
+You share a look. The moment is small but surprisingly warm.
+---
+You find some money on the floor next to your chair.|1|6||0
+You pocket it quietly and feel slightly better about the evening.|0|0|5|40
+You pocket it quietly and feel slightly better about the evening.
+---
+A dog walks past the window and you both notice it at the same time.|1|10||0
+You both smile at the same moment. It counts for something.|5|0|10|0
+You both smile at the same moment. It counts for something.
+---
+You get a notification that something you had been worried about resolved itself.|0|8||0
+One less thing on your mind. You feel noticeably lighter heading in.|5|5|10|0
+One less thing on your mind. You feel noticeably lighter heading in.
+---
+The waiter brings you something you did not order but it is exactly what you wanted.|1|7||0
+A small thing but the evening suddenly feels like it is going your way.|5|5|5|0
+A small thing but the evening suddenly feels like it is going your way.
 ---

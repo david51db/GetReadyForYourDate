@@ -22,14 +22,18 @@ RandomEvent::RandomEvent() : Event(){
     deltaVibe=0;
 }
 
-RandomEvent::RandomEvent(int chance, string avoidStat, int avoidThreshold, string textAvoided, string textResult,
-    string text, bool phase) : Event(text, phase){
+RandomEvent::RandomEvent(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney, int chance, string& avoidStat, int avoidThreshold, string& textAvoided, string& textResult,
+    string& text, bool phase) : Event(text, phase){
 
     this->chance=chance;
     this->avoidStat=avoidStat;
     this->avoidThreshold=avoidThreshold;
     this->textAvoided=textAvoided;
     this->textResult=textResult;
+    this->deltaCharm = deltaCharm;
+    this->deltaDignity = deltaDignity;
+    this->deltaVibe = deltaVibe;
+    this->deltaMoney = deltaMoney;
 }
 
 RandomEvent:: RandomEvent(const RandomEvent& obj): Event(obj) {
@@ -38,6 +42,10 @@ RandomEvent:: RandomEvent(const RandomEvent& obj): Event(obj) {
     this->avoidThreshold=obj.avoidThreshold;
     this->textAvoided=obj.textAvoided;
     this->textResult=obj.textResult;
+    this->deltaCharm = obj.deltaCharm;
+    this->deltaDignity = obj.deltaDignity;
+    this->deltaVibe = obj.deltaVibe;
+    this->deltaMoney = obj.deltaMoney;
 }
 
 RandomEvent& RandomEvent::operator=(const RandomEvent& obj) {
@@ -50,6 +58,10 @@ RandomEvent& RandomEvent::operator=(const RandomEvent& obj) {
     this->avoidThreshold=obj.avoidThreshold;
     this->textAvoided=obj.textAvoided;
     this->textResult=obj.textResult;
+    this->deltaCharm = obj.deltaCharm;
+    this->deltaDignity = obj.deltaDignity;
+    this->deltaVibe = obj.deltaVibe;
+    this->deltaMoney = obj.deltaMoney;
 
     return *this;
 }
@@ -147,7 +159,7 @@ void RandomEvent::loadFromFile(ifstream &fin) {
 }
 
 void RandomEvent::trigger(Player &player) {
-
+    cout << "\n" << string(50, '-') << "\n\n";
     cout<<text;
 
     if (this->avoidStat=="") {
@@ -183,8 +195,8 @@ void RandomEvent::trigger(Player &player) {
     }
 }
 
-bool RandomEvent::checkAvoid(Player& player) {
-    if (avoidStat == "") return false;  // nu poate fi evitat
+bool RandomEvent::checkAvoid(Player& player) const{
+    if (avoidStat == "") return false;
 
     if (avoidStat == "dignity") return player.getDignity() >= avoidThreshold;
     if (avoidStat == "charm") return player.getCharm() >= avoidThreshold;

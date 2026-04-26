@@ -1,8 +1,28 @@
-The waiter approaches the table. It's your ex!|1|20|vibe|60
-He glares at you and intentionally spills water on your lap.
-He smiles politely and pretends he doesn't know you.
+You realize mid-conversation you have been mispronouncing their name.|1|25|charm|40
+They correct you gently. You die inside.|They do not notice or do not care.
 3
-Hide under the tablecloth.|0|-10|-20|-5|0
-Make a huge scene and yell at him.|0|-5|-30|-10|1
-Leave a massive tip to show off how well you're doing.|-50|20|10|15|2
+Apologize sincerely and get it right immediately.|0|5|20|5|101
+Laugh it off and make a self-deprecating joke.|0|15|5|10|102
+Keep mispronouncing it rather than admit it.|0|-20|-25|-15|0
+---
+Your date gets a call and steps outside to take it.|1|20|vibe|50
+They come back looking slightly distracted and do not explain why.|They come back smiling and apologize warmly.
+3
+Ask directly if everything is okay.|0|0|20|10|103
+Make a lighthearted comment to ease the tension.|0|15|5|5|0
+Pretend not to notice and change the subject.|0|0|5|0|0
+---
+You accidentally call your date by the wrong name entirely.|1|10|charm|50
+They stop mid-sentence and stare at you.|They assume it was a nervous slip and let it go.
+3
+Blame it on nerves and apologize immediately.|0|5|15|5|104
+Double down and pretend it was a nickname.|0|20|-20|10|105
+Go completely silent and pray they forget it.|0|-15|-20|-10|0
+---
+Your date catches you checking your reflection in a spoon.|1|20|dignity|45
+They raise an eyebrow and say nothing.|They smile and say they do it too.
+3
+Laugh and own it completely.|0|15|5|15|0
+Pretend you were inspecting the silverware for cleanliness.|0|10|-5|5|106
+Put the spoon down and change the subject immediately.|0|-5|10|-5|0
 ---

@@ -19,7 +19,7 @@ protected:
 
 public:
     Event();
-    Event(std::string text, bool phase);
+    Event(std::string& text, bool phase);
     Event(const Event& obj);
     Event& operator=(const Event& obj);
     virtual ~Event();
@@ -28,7 +28,6 @@ public:
     friend std::istream& operator>>(std::istream& is, Event& obj);
 
     virtual void loadFromFile(std::ifstream& fin)=0;
-
     virtual void trigger(Player& player)=0;
     virtual std::string& getText(){return this->text;}
 };

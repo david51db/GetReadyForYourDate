@@ -17,7 +17,7 @@ Partner::Partner() {
     secretTrait="N/A";
 }
 
-Partner::Partner(string name, vector<string>& traitsName, string secretTrait) {
+Partner::Partner(string name, vector<string>& traitsName, string& secretTrait) {
     this->name=name;
     this->traitsName=traitsName;
     this->secretTrait=secretTrait;

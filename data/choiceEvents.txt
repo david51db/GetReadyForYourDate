@@ -1,5 +1,145 @@
-Your phone rings. What do you do?|1
-Answer it.|5|-10|-5|-20|0
-Tell your date he's more important.|20|+10|+5|+30|0
-Smash your phone.|0|-5|-20|-50|0
+You cannot decide between two outfits.|0
+Pick the bolder one and commit to it fully.|40|20|-5|10|0
+Go with the safer choice. At least it is reliable.|15|-5|15|5|0
+Wear whatever is closest to the door.|0|-15|-20|-10|0
+---
+You spill something on your shirt.|0
+Change into your backup outfit quickly.|35|-10|10|5|0
+Dab it off carefully and hope for the best.|15|5|-5|5|0
+Wear it as is and say it is a pattern.|0|-10|-20|-15|0
+---
+You notice a pimple right before heading out.|0
+Cover it expertly and take your time.|20|10|5|5|0
+Own it completely and go as you are.|0|20|-5|0|0
+Cancel and reschedule entirely.|0|-30|-25|-20|0
+---
+You cannot find your keys anywhere.|0
+Tear everything apart until you find them.|0|-15|-10|-10|0
+Check your coat pocket calmly. They were there.|0|10|15|5|0
+Leave the door unlocked and just go.|0|15|-25|0|0
+---
+Your friend texts asking how you feel.|0
+Call them for a quick pep talk.|10|0|15|10|0
+Text back something short and keep moving.|0|5|-5|5|0
+Send panicked voice messages until your battery dies.|0|-15|-20|-15|0
+---
+You accidentally text your date something meant for your friend.|0
+Own it immediately and turn it into a joke.|25|10|15|10|0
+Pretend it was intentional somehow.|0|5|-15|5|0
+Send a follow-up that makes everything worse.|0|-20|-25|-15|0
+---
+You walk past a flower stand.|0
+Buy a small bouquet on impulse.|40|20|10|15|0
+Keep walking. It might be too much.|0|0|5|0|0
+Buy yourself one flower for confidence.|15|15|0|10|0
+---
+Your phone is at four percent battery.|0
+Find somewhere to charge it before you leave.|15|0|10|-5|0
+Buy a portable charger on the spot.|40|5|15|5|0
+Go anyway and hope you do not need it.|0|-10|-5|-10|0
+---
+You realize you have no cash on you.|0
+Find an ATM and sort it out properly.|10|0|10|-5|0
+Decide card is fine and move on confidently.|0|5|5|0|0
+Panic silently about it the entire time.|0|-15|-15|-10|0
+---
+Your date texts asking if you can talk for a second.|0
+Call them immediately and hear them out.|0|5|20|10|0
+Text back asking if everything is okay.|0|0|15|5|0
+Ignore it entirely and act normal.|0|-15|-20|-15|0
+---
+You get an unexpected call from a family member.|0
+Answer briefly and explain you are busy.|0|0|15|-5|0
+Ignore it and feel guilty about it.|0|-5|-10|-5|0
+Answer and end up talking for fifteen minutes.|0|-20|-10|-20|0
+---
+Your date compliments something about you.|1
+Thank them genuinely and return the compliment.|25|10|10|15|0
+Deflect awkwardly and change the subject.|0|-5|-5|-10|0
+Say it took you forever to get ready and ruin the moment.|0|-15|-20|-10|0
+---
+Your date makes a terrible joke.|1
+Laugh genuinely even though it was awful.|20|10|-10|15|0
+Say that was the worst joke you have ever heard.|0|5|20|10|0
+Fake laugh very unconvincingly and say nothing.|0|-15|-20|-15|0
+---
+The conversation hits an awkward silence.|1
+Ask a thoughtful question to restart things.|20|0|20|10|0
+Comment on something nearby to fill the gap.|0|5|10|5|0
+Stare at your glass and wait for them to fix it.|0|-15|-20|-15|0
+---
+Your date asks what kind of music you listen to.|1
+Share your actual taste honestly and ask about theirs.|20|5|15|10|0
+Say a bit of everything to seem safe.|0|-5|5|-5|0
+Name something extremely obscure and monologue about it.|0|10|-20|0|0
+---
+Your date laughs at something you said that was not meant to be funny.|1
+Lean into it and keep the energy going.|20|15|5|10|0
+Clarify that you were actually being serious.|0|-5|10|-5|0
+Laugh along even though you have no idea why.|0|5|-5|5|0
+---
+Your date asks if you have any siblings.|1
+Share something genuine and ask about theirs.|20|5|20|15|0
+Give a one word answer and say nothing else.|0|-15|-15|-15|0
+Turn it around immediately without answering.|0|-5|10|5|0
+---
+Your date mentions something they are passionate about.|1
+Ask follow-up questions with real curiosity.|20|0|20|15|0
+Listen politely but contribute almost nothing.|0|-5|5|-5|0
+Share your own passion immediately without asking more.|0|10|-10|5|0
+---
+Your date asks if you are having a good time.|1
+Say yes and give a specific genuine reason why.|25|10|20|15|0
+Say yes without elaborating at all.|0|0|10|5|0
+Say it is fine.|0|-20|-25|-20|0
+---
+Your date says something you completely disagree with.|1
+Disagree respectfully and explain your view.|20|5|20|10|0
+Nod along even though you strongly disagree.|0|-5|-10|-10|0
+Argue your point way too passionately.|0|10|-20|5|0
+---
+Your date asks how your day was.|1
+Share something genuine and interesting.|20|5|15|10|0
+Say fine and ask about theirs.|0|0|10|5|0
+Complain about everything that went wrong.|0|-15|-25|-20|0
+---
+Your date asks about your friends.|1
+Share a funny story about them.|20|10|15|15|0
+Say you are more of a loner.|0|-10|-10|-15|0
+Talk about your friends for ten straight minutes.|0|5|-15|0|0
+---
+Your date checks their phone briefly.|1
+Ignore it completely and stay present.|20|5|15|5|0
+Make a passive comment about phones at the table.|0|-10|10|-10|0
+Check your own phone immediately in solidarity.|0|-15|-20|-15|0
+---
+Your date asks what you do for fun.|1
+Share something specific and genuinely interesting.|20|10|15|15|0
+Ask them first and answer based on their response.|0|5|10|10|0
+Say you watch a lot of TV and trail off.|0|-10|-10|-15|0
+---
+Your date asks where you see yourself in five years.|1
+Give a genuine and thoughtful answer.|25|10|15|20|0
+Laugh it off and say you live in the moment.|0|15|-10|10|0
+Panic visibly and admit you have no idea.|0|-15|-20|-20|0
+---
+Your date asks you to describe yourself in three words.|1
+Give three genuinely interesting words.|25|15|10|20|0
+Say you cannot possibly be reduced to three words.|0|20|5|15|0
+Blank completely and say nice, fun, cool.|0|-15|-15|-20|0
+---
+Your date mentions a movie you have not seen.|1
+Admit it honestly and ask what it is about.|20|0|20|10|0
+Pretend you have seen it and get caught immediately.|0|-10|-20|-15|0
+Say you do not watch movies and explain why at length.|0|5|-15|-5|0
+---
+Your date says something you completely disagree with.|1
+Disagree respectfully and explain your view.|20|5|20|10|0
+Nod along even though you strongly disagree.|0|-5|-10|-10|0
+Argue your point way too passionately.|0|10|-20|5|0
+---
+Your date asks how your day was before tonight.|1
+Share something genuine that happened.|20|5|15|10|0
+Say fine and ask about theirs.|0|0|10|5|0
+Complain about everything that went wrong today.|0|-15|-25|-20|0
 ---

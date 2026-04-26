@@ -34,9 +34,18 @@ class Game {
     int eventIndex;
     std::vector<ChoiceEvent*> secretFollowUps;
 
+
+    float calculateEndingScore() const ;
+    Ad* selectAd();
+    void suggestOffer(Event&, RPS&);
+    void saveGame();
+    void loadGame();
 public:
     Game();
-    Game(Player* player, Partner* partner,std::vector<Partner*> partnerPool, std::vector<Event*> events, std::vector<ChoiceEvent*> eventPool,std::vector<RandomEvent*> randomPool, bool running, int eventIndex);
+    Game(Player *player, Partner *partner, std::vector<Partner *> partnerPool, std::vector<Event *> events,
+         std::vector<ChoiceEvent *> eventPool, std::vector<RandomEvent *> randomPool,
+         std::vector<ChoiceEvent *> secretFollowUps,std::vector<Trait*> traitPool,
+    std::vector<Ad*> adPool, bool running, int eventIndex);
     Game(const Game& obj);
     Game& operator=(const Game& obj);
     ~Game();
@@ -56,11 +65,7 @@ public:
     void drawEvents();
     void playEvents();
     void playEnding();
-    float calculateEndingScore();
-    Ad* selectAd();
-    void suggestOffer(Event&, RPS&);
-    void saveGame();
-    void loadGame();
+
 };
 
 

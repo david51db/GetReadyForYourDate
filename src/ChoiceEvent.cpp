@@ -23,7 +23,7 @@ using namespace std;
 ChoiceEvent:: ChoiceEvent(): Event() {
 }
 
-ChoiceEvent:: ChoiceEvent(vector<Choice>& choices, string text, bool phase) : Event(text, phase) {
+ChoiceEvent:: ChoiceEvent(vector<Choice>& choices, string& text, bool phase) : Event(text, phase) {
     this->choices=choices;
 }
 
@@ -97,10 +97,11 @@ void ChoiceEvent::loadFromFile(ifstream &fin) {
 }
 
 void ChoiceEvent::trigger(Player& player) {
+    cout << "\n" << string(50, '-') << "\n\n";
     cout << this->text << "\n\n";
 
 
-
+    cout << "Money: " << player.getMoney() << "\n\n";
     for (int i=0;i<(int)choices.size();i++) {
         cout << i+1 << ". " << choices[i].getText() << " | Price: " << choices[i].getPrice() << "\n";
     }
@@ -117,23 +118,18 @@ void ChoiceEvent::trigger(Player& player) {
             }
             if (choice < 1 || choice > (int)choices.size())
                 throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            if (player.getMoney() < choices[choice-1].getPrice()) {
+                cout << "You can't afford this option! Choose another.\n";
+                continue;
+            }
             break;
-
-
         } catch (const InvalidInputException& e) {
             cout << e.what() << ". Try again.\n";
         }
-
-
     }
 
-    if (player.getMoney() < choices[choice-1].getPrice()) {
-        cout << "You can't afford this option!\n";
-        return;
-    }
     player.applyEffects(choices[choice-1]);
     ChoiceEvent* followUp = choices[choice-1].getFollowUp();
     if (followUp != nullptr)
         followUp->trigger(player);
-
 }

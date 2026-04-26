@@ -17,6 +17,7 @@ class Player {
     int vibe;
     int money;
 
+    void printEffects(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney);
 public:
     Player();
     Player(std::string name, int charm, int dignity, int vibe, int money);
@@ -27,17 +28,17 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Player& obj);
     friend std::istream& operator>>(std::istream& is, Player& obj);
 
-    void setName(std::string name){this->name=name;}
-    int getDignity(){return this->dignity;}
-    int getVibe(){return this->vibe;}
-    int getCharm(){return this->charm;}
-    int getMoney(){return this->money;}
+    void setName(std::string& name){this->name=name;}
+    int getDignity() const {return this->dignity;}
+    int getVibe() const {return this->vibe;}
+    int getCharm() const {return this->charm;}
+    int getMoney() const {return this->money;}
     void modifyMoney(int);
     void initialisePlayer();
     void newPlayer();
     void applyEffects(Choice& choice);
     void applyEffects(int, int, int, int);
-    void printEffects(int deltaCharm, int deltaDignity, int deltaVibe, int deltaMoney);
+
     std::string& getName() { return name; }
 };
 

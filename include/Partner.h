@@ -17,7 +17,7 @@ class Partner {
 
 public:
     Partner();
-    Partner(std::string name, std::vector<std::string>& traitsName, std::string secretTrait);
+    Partner(std::string name, std::vector<std::string>& traitsName, std::string& secretTrait);
     Partner(const Partner& obj);
     Partner& operator=(const Partner& obj);
     ~Partner();
@@ -25,12 +25,12 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Partner& obj);
     friend std::istream& operator>>(std::istream& is, Partner& obj);
 
-    std::string const getName(){return this->name;}
+    const std::string& getName() const {return this->name;}
     void showTraits();
 
     void loadFromFile(std::ifstream &fin);
     void loadTraits(std::vector<Trait*>& traitPool);
-    std::vector<Trait*>& getTraits(){return this->traits;}
+    std::vector<Trait*>& getTraits() {return this->traits;}
 };
 
 

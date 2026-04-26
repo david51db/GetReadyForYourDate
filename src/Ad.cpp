@@ -5,6 +5,7 @@
 #include "Ad.h"
 #include "MiniGame.h"
 #include <iostream>
+#include <windows.h>
 using namespace std;
 #include <fstream>
 #include <sstream>
@@ -75,11 +76,14 @@ void Ad::loadFromFile(ifstream &fin) {
 
 int Ad::play() {
     cout << "\n=== WATCHING AD ===\n";
-    cout << "Watching a " << duration << " second ad...\n";
-    cout<<text;
-    cout << "Press Enter to skip.\n";
-    cin.ignore();
-    cin.get();
-    cout << "Ad finished! +" << getReward() << " money.\n";
+    cout << text << "\n";
+
+    for (int i = duration; i > 0; i--) {
+        cout << "\rAd ends in: " << i << "s...   " << flush;
+        Sleep(1000);
+    }
+
+    cout << "\nAd finished! +" << getReward() << " money.\n";
     return getReward();
 }
+

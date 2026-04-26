@@ -80,18 +80,18 @@ void Player::newPlayer() {
 
     this->setName(playerName);
 
-    this->charm=30;
-    this->dignity=30;
-    this->vibe=30;
-    this->money=50;
+    this->charm=20;
+    this->dignity=20;
+    this->vibe=20;
+    this->money=30;
 
 
 }
 
 void Player::initialisePlayer() {
-    this->charm=30;
-    this->dignity=30;
-    this->vibe=30;
+    this->charm=20;
+    this->dignity=20;
+    this->vibe=20;
 }
 
 void Player::applyEffects(Choice& choice) {
@@ -99,7 +99,7 @@ void Player::applyEffects(Choice& choice) {
     this->charm=choice.getCharm()+this->charm;
     this->vibe=choice.getVibe()+this->vibe;
     this->dignity=choice.getDignity()+this->dignity;
-    this->money=choice.getMoney()+this->money;
+    this->money=choice.getMoney()+this->money- choice.getPrice();
 
     printEffects(choice.getCharm(), choice.getDignity(), choice.getVibe(), choice.getMoney());
 }

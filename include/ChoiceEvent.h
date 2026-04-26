@@ -18,7 +18,7 @@ protected:
 
 public:
     ChoiceEvent();
-    ChoiceEvent(std::vector<Choice>& choices, std::string text, bool phase);
+    ChoiceEvent(std::vector<Choice>& choices, std::string& text, bool phase);
     ChoiceEvent(const ChoiceEvent& obj);
     ChoiceEvent& operator=(const ChoiceEvent& obj);
     ~ChoiceEvent() override;
@@ -31,8 +31,8 @@ public:
     void loadFromFile(std::ifstream &fin) override;
     void trigger(Player& player) override;
 
-    int getPhase(){return this->phase;}
-    std::string& getText(){return this->text;}
+    int getPhase() const {return this->phase;}
+    std::string& getText() override{return this->text;}
 };
 
 #endif //GETREADYFORYOURDATE_CHOICEEVENT_H

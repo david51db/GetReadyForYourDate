@@ -29,7 +29,8 @@ Game::Game() {
     this->eventIndex=0;
 }
 
-Game::Game(Player *player, Partner *partner,std::vector<Partner*> partnerPool, std::vector<Event *> events,std::vector<ChoiceEvent*> eventPool, std::vector<RandomEvent *> randomPool, bool running, int eventIndex) {
+Game::Game(Player *player, Partner *partner,std::vector<Partner*> partnerPool, std::vector<Event *> events,std::vector<ChoiceEvent*> eventPool, std::vector<RandomEvent *> randomPool, std::vector<ChoiceEvent*> secretFollowUps,std::vector<Trait*> traitPool,
+    std::vector<Ad*> adPool,bool running, int eventIndex) {
     this->player = new Player(*player);
     this->partner = new Partner(*partner);
     this->partnerPool=partnerPool;
@@ -39,6 +40,8 @@ Game::Game(Player *player, Partner *partner,std::vector<Partner*> partnerPool, s
     this->secretFollowUps=secretFollowUps;
     this->running=running;
     this->eventIndex=eventIndex;
+    this->adPool=adPool;
+    this->traitPool=traitPool;
 
 }
 
@@ -123,10 +126,14 @@ Game::~Game() {
     for(auto r : randomPool) delete r;
     for(auto s : secretFollowUps) delete s;
     for (auto p: partnerPool) delete p;
+    for(auto t : traitPool) delete t;
+    for(auto a : adPool) delete a;
     partnerPool.clear();
     eventPool.clear();
     randomPool.clear();
     secretFollowUps.clear();
+    traitPool.clear();
+    adPool.clear();
 }
 
 ostream& operator<<(ostream& os, const Game& obj) {
@@ -343,13 +350,31 @@ void Game::initialise() {
 
 
 void Game::run() {
-    cout << "Welcome!\n";
+    cout << "\n";
+    cout << "  ___ ___ _____    ___ ___   _   _____   __ \n";
+    cout << " / __| __|_   _|  | _ \\ __| /_\\ |   \\ \\ / / \n";
+    cout << "| (_ | _|  | |    |   / _| / _ \\| |) \\ V /  \n";
+    cout << " \\___|___| |_|    |_|_\\___/_/ \\_\\___/ |_|   \n";
+    cout << "\n";
+    cout << "   ___ ___  ___    __   __ ___  _   _ ___   \n";
+    cout << "  | __/ _ \\| _ \\   \\ \\ / // _ \\| | | | _ \\  \n";
+    cout << "  | _| (_) |   /    \\ V /| (_) | |_| |   /  \n";
+    cout << "  |_| \\___/|_|_\\     |_|  \\___/ \\___/|_|_\\  \n";
+    cout << "\n";
+    cout << "             ___   _ _____ ___              \n";
+    cout << "            |   \\ /_\\_   _| __|             \n";
+    cout << "            | |) / _ \\| | | _|              \n";
+    cout << "            |___/_/ \\_\\_| |___|             \n\n";
+
     cout << "What is your name?\n";
     this->initialise();
 
     int choice;
     do {
-        cout << "\n===== GET READY FOR YOUR DATE =====\n";
+        cout << "\n";
+        cout << "  ====================================\n";
+        cout << "  |     GET READY FOR YOUR DATE      |\n";
+        cout << "  ====================================\n\n";
         cout << "1. Start new game\n";
         cout << "2. Load game\n";
         cout << "3. View stats\n";
@@ -524,11 +549,12 @@ void Game::suggestOffer(Event& e, RPS& rps) {
     ChoiceEvent* ce = dynamic_cast<ChoiceEvent*>(&e);
     if (ce == nullptr) return;
 
-    int cantAfford = 0;
-    for (Choice& c : ce->getChoices())
-        if (player->getMoney() < c.getPrice()) cantAfford++;
-
-    if (cantAfford >= 2) {
+    bool offered=false;
+    while (true) {
+        int cantAfford = 0;
+        for (Choice& c : ce->getChoices())
+            if (player->getMoney() < c.getPrice()) cantAfford++;
+        if (cantAfford < 2) break;
         cout << "It seems you are low on funds. Play a minigame?\n";
         cout << "1. Ad\n2. RPS\n0. Skip\n";
         int mg;
@@ -589,21 +615,21 @@ void Game::playEnding() {
         cout<<"They called an Uber before dessert...\nTerrible ending.\n";
         player->applyEffects(0,0,0,-50);
     }
-    else if (endingScore>0 && endingScore<200) {
+    else if (endingScore>0 && endingScore<500) {
         cout<<"You thought the date was decent but after that they ghosted you.\nBad ending.\n";
         player->applyEffects(0,0,0,-20);
     }
-    else if (endingScore>200 && endingScore<900) {
+    else if (endingScore>500 && endingScore<1500) {
         cout<<"The date went great! You really hit it off!\nGood ending.\n";
         player->applyEffects(0,0,0,30);
     }
-    else if (endingScore>900){
+    else if (endingScore>1500){
         cout<<"You decided to take a walk after dinner and stayed for 3 more hours. You have a special connection.\nBest ending.\n";
         player->applyEffects(0,0,0,90);
     }
 }
 
-float Game::calculateEndingScore() {
+float Game::calculateEndingScore()  const {
     int totalWeightCharm = 0;
     int totalWeightDignity = 0;
     int totalWeightVibe = 0;

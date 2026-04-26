@@ -23,7 +23,7 @@ ChainEvent::ChainEvent(vector<Choice>& choices, string text, bool phase,
                        string textAvoided, string textResult)
     : Event(text, phase),
       ChoiceEvent(choices, text, phase),
-      RandomEvent(chance, avoidStat, avoidThreshold, textAvoided, textResult, text, phase) {
+      RandomEvent(0, 0, 0, 0, chance, avoidStat, avoidThreshold, textAvoided, textResult, text, phase) {
 }
 
 ChainEvent::ChainEvent(const ChainEvent &obj): ChoiceEvent(obj), RandomEvent(obj) {
@@ -147,6 +147,7 @@ void ChainEvent::loadFromFile(ifstream &fin) {
 }
 
 void ChainEvent::trigger(Player& player) {
+    cout << "\n" << string(50, '-') << "\n\n";
     cout << text << "\n\n";
 
     bool avoided = this->checkAvoid(player);
@@ -161,7 +162,7 @@ void ChainEvent::trigger(Player& player) {
     player.applyEffects(deltaVibe, deltaCharm, deltaDignity, deltaMoney);
 
     if (choices.empty()) return;
-
+    cout << "Money: " << player.getMoney() << "\n\n";
     for (int i=0;i<(int)choices.size();i++) {
         cout << i+1 << ". " << choices[i].getText() << " | Price: " << choices[i].getPrice() << "\n";
     }
@@ -177,18 +178,16 @@ void ChainEvent::trigger(Player& player) {
             }
             if (choice < 1 || choice > (int)choices.size())
                 throw InvalidInputException("option must be between 1 and " + to_string(choices.size()));
+            if (player.getMoney() < choices[choice-1].getPrice()) {
+                cout << "You can't afford this option! Choose another.\n";
+                continue;  // re-intra in loop, cere din nou
+            }
             break;
         } catch (const InvalidInputException& e) {
             cout << e.what() << ". Try again.\n";
         }
-
-
     }
 
-    if (player.getMoney() < choices[choice-1].getPrice()) {
-        cout << "You can't afford this option!\n";
-        return;
-    }
     player.applyEffects(choices[choice-1]);
     ChoiceEvent* followUp = choices[choice-1].getFollowUp();
     if (followUp != nullptr)

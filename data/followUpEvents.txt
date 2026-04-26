@@ -1,15 +1,24 @@
-You are under the table. The waiter drops a napkin and sees you. What now?|1
-2
-Bark like a dog to confuse him.|0|10|-20|5|0
-Apologize awkwardly and climb out.|0|-5|10|-10|0
+Your date smiles and repeats their name slowly so you can hear it properly.|1
+Repeat it correctly and hold eye contact.|0|10|20|15|0
+Nod and hope you got it right this time.|0|0|10|5|0
 ---
-The manager arrives and asks why you are yelling at the waiter.|1
-2
-Demand a free meal as compensation.|0|-10|-20|0|0
-Say the waiter insulted your outfit.|0|-5|-10|-5|0
+Your date laughs and says it is actually kind of cute.|1
+Lean into it and make another joke.|0|15|10|15|0
+Apologize again even though they are clearly not upset.|0|-5|5|-5|0
 ---
-He looks at the massive tip, smirks, and slips you his phone number.|1
-2
-Tear the paper up right in front of him.|0|10|20|10|0
-Quietly keep it in your pocket.|0|-5|-10|5|0
+Your date tells you it was nothing serious. They just needed a moment.|1
+Say you are glad they told you and move on warmly.|0|5|20|15|0
+Nod but say very little. The moment passes quietly.|0|0|5|0|0
+---
+Your date accepts the apology and says they get it, first dates are nerve-wracking.|1
+Agree and let yourself relax a little.|0|5|15|15|0
+Over-apologize for the next ten minutes.|0|-10|5|-10|0
+---
+Your date looks confused but plays along with the nickname.|1
+Commit to it and make it a bit.|0|20|-5|15|0
+Admit immediately that you panicked and apologize.|0|5|10|5|0
+---
+Your date asks what exactly you were looking for in the spoon.|1
+Say you were checking if you looked as nervous as you felt.|0|15|10|15|0
+Say the lighting in here is incredible and leave it at that.|0|10|5|10|0
 ---
